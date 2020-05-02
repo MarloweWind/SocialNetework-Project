@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1520851A245DF3D800C8EC4E /* FirstTabTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15208519245DF3D800C8EC4E /* FirstTabTableViewController.swift */; };
 		15B73824245435590007C99C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15B73823245435590007C99C /* AppDelegate.swift */; };
 		15B73826245435590007C99C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15B73825245435590007C99C /* SceneDelegate.swift */; };
 		15B73828245435590007C99C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15B73827245435590007C99C /* ViewController.swift */; };
@@ -16,6 +17,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		15208519245DF3D800C8EC4E /* FirstTabTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstTabTableViewController.swift; sourceTree = "<group>"; };
 		15B73820245435590007C99C /* dz_AlexeyMalkov.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = dz_AlexeyMalkov.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		15B73823245435590007C99C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		15B73825245435590007C99C /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -59,6 +61,7 @@
 				15B73823245435590007C99C /* AppDelegate.swift */,
 				15B73825245435590007C99C /* SceneDelegate.swift */,
 				15B73827245435590007C99C /* ViewController.swift */,
+				15208519245DF3D800C8EC4E /* FirstTabTableViewController.swift */,
 				15B73829245435590007C99C /* Main.storyboard */,
 				15B7382C245435600007C99C /* Assets.xcassets */,
 				15B7382E245435600007C99C /* LaunchScreen.storyboard */,
@@ -140,6 +143,7 @@
 			files = (
 				15B73828245435590007C99C /* ViewController.swift in Sources */,
 				15B73824245435590007C99C /* AppDelegate.swift in Sources */,
+				1520851A245DF3D800C8EC4E /* FirstTabTableViewController.swift in Sources */,
 				15B73826245435590007C99C /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
