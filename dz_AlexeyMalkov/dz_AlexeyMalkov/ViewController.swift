@@ -20,7 +20,21 @@ class ViewController: UIViewController {
     }
 
     @IBAction func loginButton(_ sender: UIButton) {
+        let login = loginField.text!
+        let password = passwordField.text!
+        if login == "admin" && password == "123456"{
+            print("Успешная авторизация")
+            performSegue(withIdentifier: "fromAutorizationToTubbarSegue", sender: self)
+        } else {
+            let alert = UIAlertController(title: "Не правильный пароль", message: "Введите пароль еще раз", preferredStyle: .alert)
+
+            alert.addAction(UIAlertAction(title: "Ок", style: .default, handler: nil))
+
+            self.present(alert, animated: true)
+            print("Неуспешная авторизация")
+        }
+        
     }
-    //на проверку
+    
 }
 
