@@ -8,6 +8,15 @@
 
 /* Begin PBXBuildFile section */
 		1520851A245DF3D800C8EC4E /* FirstTabTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15208519245DF3D800C8EC4E /* FirstTabTableViewController.swift */; };
+		1564AD42246D5FFD00262B5B /* friendsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1564AD41246D5FFD00262B5B /* friendsTableViewCell.swift */; };
+		1564AD44246D70A200262B5B /* UsersPhotoCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1564AD43246D70A200262B5B /* UsersPhotoCollectionViewController.swift */; };
+		1564AD46246D710C00262B5B /* PhotoCellCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1564AD45246D710C00262B5B /* PhotoCellCollectionViewCell.swift */; };
+		1564AD48246D71A100262B5B /* SecondTabTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1564AD47246D71A100262B5B /* SecondTabTableViewController.swift */; };
+		1564AD4A246D72B500262B5B /* UsersGroupsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1564AD49246D72B500262B5B /* UsersGroupsTableViewCell.swift */; };
+		1564AD4C246D735500262B5B /* GlobalGroupsTebleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1564AD4B246D735500262B5B /* GlobalGroupsTebleViewController.swift */; };
+		1564AD4E246D73E500262B5B /* GlobalGroupsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1564AD4D246D73E500262B5B /* GlobalGroupsTableViewCell.swift */; };
+		1564AD55246D88AF00262B5B /* UserList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1564AD54246D88AF00262B5B /* UserList.swift */; };
+		1564AD57246D89D400262B5B /* GroupList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1564AD56246D89D400262B5B /* GroupList.swift */; };
 		15B73824245435590007C99C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15B73823245435590007C99C /* AppDelegate.swift */; };
 		15B73826245435590007C99C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15B73825245435590007C99C /* SceneDelegate.swift */; };
 		15B73828245435590007C99C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15B73827245435590007C99C /* ViewController.swift */; };
@@ -18,6 +27,15 @@
 
 /* Begin PBXFileReference section */
 		15208519245DF3D800C8EC4E /* FirstTabTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstTabTableViewController.swift; sourceTree = "<group>"; };
+		1564AD41246D5FFD00262B5B /* friendsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = friendsTableViewCell.swift; sourceTree = "<group>"; };
+		1564AD43246D70A200262B5B /* UsersPhotoCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsersPhotoCollectionViewController.swift; sourceTree = "<group>"; };
+		1564AD45246D710C00262B5B /* PhotoCellCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCellCollectionViewCell.swift; sourceTree = "<group>"; };
+		1564AD47246D71A100262B5B /* SecondTabTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondTabTableViewController.swift; sourceTree = "<group>"; };
+		1564AD49246D72B500262B5B /* UsersGroupsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsersGroupsTableViewCell.swift; sourceTree = "<group>"; };
+		1564AD4B246D735500262B5B /* GlobalGroupsTebleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalGroupsTebleViewController.swift; sourceTree = "<group>"; };
+		1564AD4D246D73E500262B5B /* GlobalGroupsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalGroupsTableViewCell.swift; sourceTree = "<group>"; };
+		1564AD54246D88AF00262B5B /* UserList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserList.swift; sourceTree = "<group>"; };
+		1564AD56246D89D400262B5B /* GroupList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupList.swift; sourceTree = "<group>"; };
 		15B73820245435590007C99C /* dz_AlexeyMalkov.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = dz_AlexeyMalkov.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		15B73823245435590007C99C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		15B73825245435590007C99C /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -39,6 +57,51 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1564AD4F246D867600262B5B /* UsersFriends */ = {
+			isa = PBXGroup;
+			children = (
+				15208519245DF3D800C8EC4E /* FirstTabTableViewController.swift */,
+				1564AD41246D5FFD00262B5B /* friendsTableViewCell.swift */,
+			);
+			path = UsersFriends;
+			sourceTree = "<group>";
+		};
+		1564AD50246D86C600262B5B /* UsersPhotos */ = {
+			isa = PBXGroup;
+			children = (
+				1564AD43246D70A200262B5B /* UsersPhotoCollectionViewController.swift */,
+				1564AD45246D710C00262B5B /* PhotoCellCollectionViewCell.swift */,
+			);
+			path = UsersPhotos;
+			sourceTree = "<group>";
+		};
+		1564AD51246D86E900262B5B /* UsersGroups */ = {
+			isa = PBXGroup;
+			children = (
+				1564AD47246D71A100262B5B /* SecondTabTableViewController.swift */,
+				1564AD49246D72B500262B5B /* UsersGroupsTableViewCell.swift */,
+			);
+			path = UsersGroups;
+			sourceTree = "<group>";
+		};
+		1564AD52246D872200262B5B /* GlobalGroups */ = {
+			isa = PBXGroup;
+			children = (
+				1564AD4B246D735500262B5B /* GlobalGroupsTebleViewController.swift */,
+				1564AD4D246D73E500262B5B /* GlobalGroupsTableViewCell.swift */,
+			);
+			path = GlobalGroups;
+			sourceTree = "<group>";
+		};
+		1564AD53246D877A00262B5B /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				1564AD54246D88AF00262B5B /* UserList.swift */,
+				1564AD56246D89D400262B5B /* GroupList.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		15B73817245435590007C99C = {
 			isa = PBXGroup;
 			children = (
@@ -61,7 +124,11 @@
 				15B73823245435590007C99C /* AppDelegate.swift */,
 				15B73825245435590007C99C /* SceneDelegate.swift */,
 				15B73827245435590007C99C /* ViewController.swift */,
-				15208519245DF3D800C8EC4E /* FirstTabTableViewController.swift */,
+				1564AD4F246D867600262B5B /* UsersFriends */,
+				1564AD50246D86C600262B5B /* UsersPhotos */,
+				1564AD51246D86E900262B5B /* UsersGroups */,
+				1564AD52246D872200262B5B /* GlobalGroups */,
+				1564AD53246D877A00262B5B /* Model */,
 				15B73829245435590007C99C /* Main.storyboard */,
 				15B7382C245435600007C99C /* Assets.xcassets */,
 				15B7382E245435600007C99C /* LaunchScreen.storyboard */,
@@ -141,10 +208,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1564AD4E246D73E500262B5B /* GlobalGroupsTableViewCell.swift in Sources */,
 				15B73828245435590007C99C /* ViewController.swift in Sources */,
 				15B73824245435590007C99C /* AppDelegate.swift in Sources */,
+				1564AD4A246D72B500262B5B /* UsersGroupsTableViewCell.swift in Sources */,
+				1564AD57246D89D400262B5B /* GroupList.swift in Sources */,
+				1564AD55246D88AF00262B5B /* UserList.swift in Sources */,
 				1520851A245DF3D800C8EC4E /* FirstTabTableViewController.swift in Sources */,
+				1564AD48246D71A100262B5B /* SecondTabTableViewController.swift in Sources */,
 				15B73826245435590007C99C /* SceneDelegate.swift in Sources */,
+				1564AD44246D70A200262B5B /* UsersPhotoCollectionViewController.swift in Sources */,
+				1564AD42246D5FFD00262B5B /* friendsTableViewCell.swift in Sources */,
+				1564AD4C246D735500262B5B /* GlobalGroupsTebleViewController.swift in Sources */,
+				1564AD46246D710C00262B5B /* PhotoCellCollectionViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

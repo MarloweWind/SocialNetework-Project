@@ -1,15 +1,20 @@
 //
-//  FirstTabTableViewController.swift
+//  SecondTabTableViewController.swift
 //  dz_AlexeyMalkov
 //
-//  Created by Алексей Мальков on 02.05.2020.
+//  Created by Алексей Мальков on 14.05.2020.
 //  Copyright © 2020 Alexey Malkov. All rights reserved.
 //
 
 import UIKit
 
-class FirstTabTableViewController: UITableViewController {
+class SecondTabTableViewController: UITableViewController {
 
+    var group: [GroupList] = [
+    GroupList(groupName: "Группа RST", groupAvatar: UIImage(named: "31")!),
+    GroupList(groupName: "Группа Zel RU", groupAvatar: UIImage(named: "32")!),
+    ]
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -22,30 +27,44 @@ class FirstTabTableViewController: UITableViewController {
 
     // MARK: - Table view data source
 
+//    override func numberOfSections(in tableView: UITableView) -> Int {
+//        // #warning Incomplete implementation, return the number of sections
+//        return 0
+//    }
+    
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            group.remove(at: indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: .fade)
+        }
+    }
+    
+    @IBAction func addGroup(segue: UIStoryboardSegue) {
+        if segue.identifier == "addGroup" {
+            let globalGroupsTebleViewController = segue.source as? GlobalGroupsTebleViewController
+            if let indexPath = globalGroupsTebleViewController?.tableView.indexPathForSelectedRow{
+                let groupAdd = globalGroupsTebleViewController?.group[indexPath.row]
+                if !group.contains(groupAdd!){
+                    group.append(groupAdd!)
+                    tableView.reloadData()
+                }
+            }
+        }
+    }
+        
+    
+
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 1
+        return group.count
     }
-    
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        performSegue(withIdentifier: "fromTableToCollection", sender: self)
-    }
-    
+
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = UITableViewCell()
-        cell.textLabel?.text = "Строка"
+        let cell = tableView.dequeueReusableCell(withIdentifier: "usersGropus", for: indexPath) as! UsersGroupsTableViewCell
+        cell.groupAvatar.image = group[indexPath.row].groupAvatar
+        cell.groupName.text = group[indexPath.row].groupName
         return cell
     }
-
-    /*
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
-
-        // Configure the cell...
-
-        return cell
-    }
-    */
 
     /*
     // Override to support conditional editing of the table view.
