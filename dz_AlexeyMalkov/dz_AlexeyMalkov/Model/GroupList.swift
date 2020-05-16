@@ -9,7 +9,7 @@
 import UIKit
 import Foundation
 
-struct GroupList: Equatable {
+struct GroupList {
     var groupName: String
     var groupAvatar: UIImage?
 }

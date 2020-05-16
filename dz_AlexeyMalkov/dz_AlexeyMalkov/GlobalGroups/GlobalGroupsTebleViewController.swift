@@ -8,6 +8,10 @@
 
 import UIKit
 
+protocol GlobalGroupsTebleViewControllerDelegate: AnyObject {
+    func didSelectGroupList(list: GroupList)
+}
+
 class GlobalGroupsTebleViewController: UITableViewController {
 
     var group: [GroupList] = [
@@ -15,22 +19,7 @@ class GlobalGroupsTebleViewController: UITableViewController {
     GroupList(groupName: "Группа RST", groupAvatar: UIImage(named: "42")!),
     ]
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
-    }
-
-    // MARK: - Table view data source
-
-//    override func numberOfSections(in tableView: UITableView) -> Int {
-//        // #warning Incomplete implementation, return the number of sections
-//        return 0
-//    }
+    weak var delegate: GlobalGroupsTebleViewControllerDelegate?
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
@@ -43,6 +32,11 @@ class GlobalGroupsTebleViewController: UITableViewController {
         cell.globalGroupAvatar.image = group[indexPath.row].groupAvatar
         cell.globalGroupName.text = group[indexPath.row].groupName
         return cell
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        delegate?.didSelectGroupList(list: group[indexPath.row])
+        self.navigationController?.popToRootViewController(animated: true)
     }
     
 
