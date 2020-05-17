@@ -26,6 +26,10 @@ class UsersPhotoCollectionViewController: UICollectionViewController {
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "usersPhoto", for: indexPath) as! PhotoCellCollectionViewCell
         cell.userPhoto.image = photo
+        cell.buttonLike.setImage(UIImage(named: "like1"), for: .normal)
+        cell.buttonLike.setImage(UIImage(named: "like2"), for: .selected)
+        let numberOfLikes: Int = 0;
+        cell.labelLike.text = String(numberOfLikes)
         return cell
     }
 
