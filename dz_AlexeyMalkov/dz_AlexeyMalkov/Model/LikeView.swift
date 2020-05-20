@@ -8,6 +8,47 @@
 
 import UIKit
 
-class LikeView: UIView {
-
+class LikeView: UIControl {
+    var flag = true
+    
+    let label = UILabel(frame: CGRect(x: 0, y: 0, width: 21, height: 21))
+    let image = UIImage(systemName: "heart")
+    var imageView = UIImageView()
+    
+    override init(frame: CGRect){
+        super.init(frame: frame)
+        uisetup()
+    }
+    required init?(coder:NSCoder){
+        super.init(coder: coder)
+        uisetup()
+    }
+    
+    func uisetup(){
+        label.text = "0"
+        
+        imageView = UIImageView(frame: CGRect(x: 15, y: 0, width: 21, height: 21))
+        imageView.image = image
+        imageView.contentMode = .scaleAspectFit
+        imageView.tintColor = .blue
+        self.addSubview(label)
+        self.addSubview(imageView)
+    }
+    
+    override func beginTracking(_ touch: UITouch, with event: UIEvent?) -> Bool {
+        return true
+    }
+    
+    override func endTracking(_ touch: UITouch?, with event: UIEvent?) {
+        if flag {
+            label.text = "1"
+            imageView.tintColor = .red
+            flag = false
+        }else{
+            label.text = "0"
+            imageView.tintColor = .blue
+            flag = true
+        }
+    }
+    
 }
