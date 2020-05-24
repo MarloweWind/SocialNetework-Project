@@ -74,15 +74,19 @@ class FirstTabTableViewController: UITableViewController, UISearchBarDelegate {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        var userRow = [UserList]()
-        for a in user{
-            if userIndex[indexPath.section].contains(a.name.first!){
-            userRow.append(a)
+        if searching {
+            let passedImage = filtered[indexPath.row].userImage
+            performSegue(withIdentifier: "fromTableToCollection", sender: passedImage)
+        } else {
+            var userRow = [UserList]()
+            for a in user{
+                if userIndex[indexPath.section].contains(a.name.first!){
+                userRow.append(a)
+                }
             }
+            let passedImage = userRow[indexPath.row].userImage
+            performSegue(withIdentifier: "fromTableToCollection", sender: passedImage)
         }
-        
-        let passedImage = userRow[indexPath.row].userImage
-        performSegue(withIdentifier: "fromTableToCollection", sender: passedImage)
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
