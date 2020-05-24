@@ -47,7 +47,11 @@ class FirstTabTableViewController: UITableViewController, UISearchBarDelegate {
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return userIndex[section]
+        if searching{
+            return nil
+        } else{
+            return userIndex[section]
+        }
     }
     
     override func sectionIndexTitles(for tableView: UITableView) -> [String]? {
@@ -92,6 +96,7 @@ class FirstTabTableViewController: UITableViewController, UISearchBarDelegate {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "userInfoCell", for: indexPath) as! friendsTableViewCell
         if searching{
+            cell.avatarImageView?.image = filtered[indexPath.row].avatar
             cell.nameLabel?.text = filtered[indexPath.row].name
         } else {
         var userRow = [UserList]()

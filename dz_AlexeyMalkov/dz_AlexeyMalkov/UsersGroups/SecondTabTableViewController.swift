@@ -57,7 +57,7 @@ class SecondTabTableViewController: UITableViewController, UISearchBarDelegate {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "usersGropus", for: indexPath) as! UsersGroupsTableViewCell
         if searching {
-            cell.groupAvatar?.image = group[indexPath.row].groupAvatar
+            cell.groupAvatar.image = filtered[indexPath.row].groupAvatar
             cell.groupName.text = filtered[indexPath.row].groupName
         } else {
         
