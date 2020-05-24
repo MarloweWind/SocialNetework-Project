@@ -15,8 +15,8 @@ protocol GlobalGroupsTebleViewControllerDelegate: AnyObject {
 class GlobalGroupsTebleViewController: UITableViewController {
 
     var group: [GroupList] = [
-    GroupList(groupName: "Фанаты GIF", groupAvatar: UIImage(named: "41")!),
-    GroupList(groupName: "Группа RST", groupAvatar: UIImage(named: "42")!),
+    GroupList(groupName: "GIF", groupAvatar: UIImage(named: "41")!),
+    GroupList(groupName: "R6G", groupAvatar: UIImage(named: "42")!),
     ]
     
     weak var delegate: GlobalGroupsTebleViewControllerDelegate?

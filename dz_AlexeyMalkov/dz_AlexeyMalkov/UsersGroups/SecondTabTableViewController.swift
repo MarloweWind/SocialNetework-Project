@@ -8,12 +8,29 @@
 
 import UIKit
 
-class SecondTabTableViewController: UITableViewController {
+class SecondTabTableViewController: UITableViewController, UISearchBarDelegate {
 
+    @IBOutlet weak var searchBar: UISearchBar!
+    
     var group: [GroupList] = [
-    GroupList(groupName: "Группа RST", groupAvatar: UIImage(named: "31")!),
-    GroupList(groupName: "Группа Zel RU", groupAvatar: UIImage(named: "32")!),
+    GroupList(groupName: "RST", groupAvatar: UIImage(named: "31")!),
+    GroupList(groupName: "Zel RU", groupAvatar: UIImage(named: "32")!),
     ]
+    
+    var filtered = [GroupList]()
+    var searching = false
+    //серчбар
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        filtered = group.filter({$0.groupName.lowercased().prefix(searchText.count) == searchText.lowercased()})
+        searching = true
+        tableView.reloadData()
+    }
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        searching = false
+        searchBar.text = ""
+        tableView.reloadData()
+    }
     
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
@@ -30,14 +47,23 @@ class SecondTabTableViewController: UITableViewController {
     
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return group.count
+        if searching {
+            return filtered.count
+        } else {
+            return group.count
+        }
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "usersGropus", for: indexPath) as! UsersGroupsTableViewCell
-        cell.groupAvatar.image = group[indexPath.row].groupAvatar
-        cell.groupName.text = group[indexPath.row].groupName
+        if searching {
+            cell.groupAvatar?.image = group[indexPath.row].groupAvatar
+            cell.groupName.text = filtered[indexPath.row].groupName
+        } else {
+        
+            cell.groupAvatar.image = group[indexPath.row].groupAvatar
+            cell.groupName.text = group[indexPath.row].groupName
+        }
         return cell
     }
 }
