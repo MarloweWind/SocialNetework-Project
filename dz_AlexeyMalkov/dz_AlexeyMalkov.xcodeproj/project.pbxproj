@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		1520851A245DF3D800C8EC4E /* FirstTabTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15208519245DF3D800C8EC4E /* FirstTabTableViewController.swift */; };
+		152ABB11247BC67C0035B9EB /* ThirdTabTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 152ABB10247BC67C0035B9EB /* ThirdTabTableViewController.swift */; };
+		152ABB14247BD5230035B9EB /* FeedTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 152ABB12247BD5230035B9EB /* FeedTableViewCell.swift */; };
+		152ABB17247BDBB30035B9EB /* FeedList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 152ABB16247BDBB30035B9EB /* FeedList.swift */; };
 		15414B8F2471495000364498 /* AvatarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15414B8E2471495000364498 /* AvatarView.swift */; };
 		15414B9124715B2600364498 /* LikeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15414B9024715B2600364498 /* LikeView.swift */; };
 		1564AD42246D5FFD00262B5B /* friendsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1564AD41246D5FFD00262B5B /* friendsTableViewCell.swift */; };
@@ -29,6 +32,9 @@
 
 /* Begin PBXFileReference section */
 		15208519245DF3D800C8EC4E /* FirstTabTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstTabTableViewController.swift; sourceTree = "<group>"; };
+		152ABB10247BC67C0035B9EB /* ThirdTabTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThirdTabTableViewController.swift; sourceTree = "<group>"; };
+		152ABB12247BD5230035B9EB /* FeedTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedTableViewCell.swift; sourceTree = "<group>"; };
+		152ABB16247BDBB30035B9EB /* FeedList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedList.swift; sourceTree = "<group>"; };
 		15414B8E2471495000364498 /* AvatarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarView.swift; sourceTree = "<group>"; };
 		15414B9024715B2600364498 /* LikeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikeView.swift; sourceTree = "<group>"; };
 		1564AD41246D5FFD00262B5B /* friendsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = friendsTableViewCell.swift; sourceTree = "<group>"; };
@@ -61,6 +67,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		152ABB0F247BC1690035B9EB /* UsersFeed */ = {
+			isa = PBXGroup;
+			children = (
+				152ABB10247BC67C0035B9EB /* ThirdTabTableViewController.swift */,
+				152ABB12247BD5230035B9EB /* FeedTableViewCell.swift */,
+			);
+			path = UsersFeed;
+			sourceTree = "<group>";
+		};
 		1564AD4F246D867600262B5B /* UsersFriends */ = {
 			isa = PBXGroup;
 			children = (
@@ -104,6 +119,7 @@
 				1564AD56246D89D400262B5B /* GroupList.swift */,
 				15414B8E2471495000364498 /* AvatarView.swift */,
 				15414B9024715B2600364498 /* LikeView.swift */,
+				152ABB16247BDBB30035B9EB /* FeedList.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -134,6 +150,7 @@
 				1564AD50246D86C600262B5B /* UsersPhotos */,
 				1564AD51246D86E900262B5B /* UsersGroups */,
 				1564AD52246D872200262B5B /* GlobalGroups */,
+				152ABB0F247BC1690035B9EB /* UsersFeed */,
 				1564AD53246D877A00262B5B /* Model */,
 				15B73829245435590007C99C /* Main.storyboard */,
 				15B7382C245435600007C99C /* Assets.xcassets */,
@@ -217,6 +234,7 @@
 				1564AD4E246D73E500262B5B /* GlobalGroupsTableViewCell.swift in Sources */,
 				15B73828245435590007C99C /* ViewController.swift in Sources */,
 				15B73824245435590007C99C /* AppDelegate.swift in Sources */,
+				152ABB14247BD5230035B9EB /* FeedTableViewCell.swift in Sources */,
 				1564AD4A246D72B500262B5B /* UsersGroupsTableViewCell.swift in Sources */,
 				1564AD57246D89D400262B5B /* GroupList.swift in Sources */,
 				1564AD55246D88AF00262B5B /* UserList.swift in Sources */,
@@ -226,9 +244,11 @@
 				15414B8F2471495000364498 /* AvatarView.swift in Sources */,
 				1564AD44246D70A200262B5B /* UsersPhotoCollectionViewController.swift in Sources */,
 				1564AD42246D5FFD00262B5B /* friendsTableViewCell.swift in Sources */,
+				152ABB17247BDBB30035B9EB /* FeedList.swift in Sources */,
 				15414B9124715B2600364498 /* LikeView.swift in Sources */,
 				1564AD4C246D735500262B5B /* GlobalGroupsTebleViewController.swift in Sources */,
 				1564AD46246D710C00262B5B /* PhotoCellCollectionViewCell.swift in Sources */,
+				152ABB11247BC67C0035B9EB /* ThirdTabTableViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
