@@ -64,12 +64,22 @@
                                     <constraint firstItem="HRC-gJ-xxO" firstAttribute="leading" secondItem="qhc-ZE-B6X" secondAttribute="leading" id="wjX-U3-5eP"/>
                                 </constraints>
                             </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3YA-3v-cjX" customClass="LoadinAnimation" customModule="dz_AlexeyMalkov" customModuleProvider="target">
+                                <rect key="frame" x="182" y="181" width="50" height="15"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="15" id="fbC-1e-Sss"/>
+                                    <constraint firstAttribute="width" constant="50" id="l7q-wB-VYg"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" red="0.96862745098039216" green="0.96862745098039216" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="qhc-ZE-B6X" firstAttribute="top" relation="lessThanOrEqual" secondItem="pZT-Lw-SNs" secondAttribute="bottom" constant="220" id="0ea-lo-xwJ"/>
                             <constraint firstItem="qhc-ZE-B6X" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="5jy-RM-xLj"/>
+                            <constraint firstItem="3YA-3v-cjX" firstAttribute="top" secondItem="pZT-Lw-SNs" secondAttribute="bottom" constant="30" id="ZLa-qP-sL6"/>
                             <constraint firstItem="qhc-ZE-B6X" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="p9z-fa-rra"/>
+                            <constraint firstItem="3YA-3v-cjX" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="vcy-uP-dsk"/>
                             <constraint firstItem="pZT-Lw-SNs" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="wwk-Ux-HqF"/>
                             <constraint firstItem="pZT-Lw-SNs" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="32" id="zOh-DG-q1t"/>
                         </constraints>

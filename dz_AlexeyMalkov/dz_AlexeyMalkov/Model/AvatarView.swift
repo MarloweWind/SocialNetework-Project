@@ -42,6 +42,7 @@ class AvatarView: UIView {
             layer.cornerRadius = bounds.height / 2
             layer.shadowOffset = CGSize.zero
         }
+    
     }
 
     class FriendAvatarImageView: UIImageView{
@@ -49,5 +50,5 @@ class AvatarView: UIView {
             super.layoutSubviews()
             layer.cornerRadius = bounds.height / 2
         }
-
+        
 }

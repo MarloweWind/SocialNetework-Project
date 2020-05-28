@@ -44,6 +44,24 @@ class LikeView: UIControl {
             label.text = "1"
             imageView.tintColor = .red
             flag = false
+            
+            UIView.animate(withDuration: 0.5,
+                       delay: 0,
+                       usingSpringWithDamping: 0.5,
+                       initialSpringVelocity: 0,
+                       options: [.curveEaseInOut],
+                       animations: {
+            self.label.frame.origin.y -= 10
+            }) { (_) in
+                UIView.animate(withDuration: 0.5,
+                           delay: 0,
+                           usingSpringWithDamping: 0.5,
+                           initialSpringVelocity: 0,
+                           options: [.curveEaseInOut],
+                           animations: {
+                self.label.frame.origin.y += 10
+            })
+        }
         }else{
             label.text = "0"
             imageView.tintColor = .blue
