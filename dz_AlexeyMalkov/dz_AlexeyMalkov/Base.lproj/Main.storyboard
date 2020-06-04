@@ -436,7 +436,7 @@
         <!--Группы-->
         <scene sceneID="KEm-Ao-ZiM">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="wvy-2R-qbK" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="wvy-2R-qbK" customClass="CustomNavigationController" customModule="dz_AlexeyMalkov" customModuleProvider="target" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Группы" image="person.3.fill" catalog="system" id="RzW-6W-cYV"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="uUO-kR-BM5">
@@ -529,7 +529,7 @@
         <!--Друзья-->
         <scene sceneID="ctg-Ea-edG">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="eFJ-9D-K8t" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="eFJ-9D-K8t" customClass="CustomNavigationController" customModule="dz_AlexeyMalkov" customModuleProvider="target" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Друзья" image="person.fill" catalog="system" id="Qi4-Xo-Ltk"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="e5i-Qp-Sfd">
