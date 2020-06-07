@@ -8,10 +8,18 @@
 
 import UIKit
 
+protocol ScaleImageDelegate: AnyObject {
+    func needToSwipe(fromIndexPath: Int, fullscreen: UIImageView, usedIndexPath: Int)
+}
+
 class ScaleImage: UIImageView {
     
+    weak var delegate: ScaleImageDelegate?
+    var indexPathToUse: Int?
+    var usedIndexPath: Int?
+    
     fileprivate let imageTag = 35012
-    var fullscreenImageView: UIImageView!
+    var fullscreenImageView: UIImageView?
     var closeLabel: UILabel!
 
     override init(frame: CGRect) {
@@ -72,19 +80,19 @@ class ScaleImage: UIImageView {
             let labelWidth = window.frame.size.width
             let labelHeight = closeLabel.frame.size.height + 16
             self.closeLabel.frame =  CGRect.init(x: 0, y: window.frame.size.height - labelHeight, width: labelWidth, height: labelHeight)
-            self.fullscreenImageView.addSubview(closeLabel)
+            guard let nonEmptyFullScreenImageView = fullscreenImageView else { return }
+            nonEmptyFullScreenImageView.addSubview(closeLabel)
             
-            window.addSubview(self.fullscreenImageView)
+            window.addSubview(nonEmptyFullScreenImageView)
             UIView.animate(withDuration: 0.4,
                            delay: 0.0,
                            options: .curveEaseInOut,
                            animations: {
-                            self.fullscreenImageView.frame = window.frame
-                            self.fullscreenImageView.alpha = 1
-                            self.fullscreenImageView.layoutSubviews()
+                            nonEmptyFullScreenImageView.frame = window.frame
+                            nonEmptyFullScreenImageView.alpha = 1
+                            nonEmptyFullScreenImageView.layoutSubviews()
                             self.closeLabel.alpha = 1
-                }, completion: { _ in
-            })
+                })
         }
     }
     
@@ -98,18 +106,24 @@ class ScaleImage: UIImageView {
                         self.fullscreenImageView?.alpha = 0
        
         }, completion: { finished in
-            
                         self.fullscreenImageView?.removeFromSuperview()
                         self.fullscreenImageView = nil
         })
     }
-    @objc func swipingAnimation(_ sender: UISwipeGestureRecognizer) {
-        let toImage = UIImage(named: "22")
-        UIView.transition(with: self.fullscreenImageView,
+    
+    func swipeToImage(toImage: UIImage) {
+        guard let fullScreen = self.fullscreenImageView else { return }
+        UIView.transition(with: fullScreen,
                           duration: 0.33,
                           options: [.transitionFlipFromRight],
                           animations: {
-                            self.fullscreenImageView.image = toImage
-        }, completion: nil)
+                            fullScreen.image = toImage
+        })
+    }
+    
+    @objc func swipingAnimation(_ sender: UISwipeGestureRecognizer) {
+        guard let nonEmtpyIndexPath = indexPathToUse, let nonEmptyUsedIndexPath = usedIndexPath, let nonEmptyFullScreenImageView = fullscreenImageView else { return }
+        
+        delegate?.needToSwipe(fromIndexPath: nonEmtpyIndexPath, fullscreen: nonEmptyFullScreenImageView, usedIndexPath: nonEmptyUsedIndexPath)
     }
 }

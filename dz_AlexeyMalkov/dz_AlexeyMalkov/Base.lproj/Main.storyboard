@@ -399,7 +399,7 @@
                                 <size key="customSize" width="150" height="180"/>
                                 <connections>
                                     <outlet property="ViewLike" destination="9yd-Lo-MlE" id="IcY-QK-lkz"/>
-                                    <outlet property="userPhoto" destination="esv-Bg-5MW" id="7Op-yQ-xH7"/>
+                                    <outlet property="userPhoto" destination="esv-Bg-5MW" id="6lO-Ne-8eR"/>
                                 </connections>
                             </collectionViewCell>
                         </cells>
