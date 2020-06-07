@@ -25,16 +25,13 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qhc-ZE-B6X" userLabel="logPassContainer">
                                 <rect key="frame" x="127" y="371" width="160" height="154"/>
                                 <subviews>
-                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Пароль" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="LJX-DK-tJT">
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Пароль" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="LJX-DK-tJT">
                                         <rect key="frame" x="0.0" y="59" width="160" height="34"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
-                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Логин" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="HRC-gJ-xxO">
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Логин" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="HRC-gJ-xxO">
                                         <rect key="frame" x="0.0" y="0.0" width="160" height="34"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="160" id="c45-NV-vBC"/>
-                                        </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
@@ -55,6 +52,7 @@
                                     <constraint firstItem="HRC-gJ-xxO" firstAttribute="top" secondItem="qhc-ZE-B6X" secondAttribute="top" id="9MT-58-9bq"/>
                                     <constraint firstAttribute="trailing" secondItem="HRC-gJ-xxO" secondAttribute="trailing" id="C0U-zp-byN"/>
                                     <constraint firstItem="AYM-PJ-OwO" firstAttribute="leading" secondItem="qhc-ZE-B6X" secondAttribute="leading" id="FZm-Fp-4w4"/>
+                                    <constraint firstAttribute="width" constant="160" id="H0d-oQ-tMS"/>
                                     <constraint firstAttribute="bottom" secondItem="AYM-PJ-OwO" secondAttribute="bottom" id="K34-y2-3jx"/>
                                     <constraint firstItem="AYM-PJ-OwO" firstAttribute="top" secondItem="LJX-DK-tJT" secondAttribute="bottom" constant="25" id="LZ3-6x-rCb"/>
                                     <constraint firstAttribute="trailing" secondItem="LJX-DK-tJT" secondAttribute="trailing" id="QvJ-L1-FfX"/>

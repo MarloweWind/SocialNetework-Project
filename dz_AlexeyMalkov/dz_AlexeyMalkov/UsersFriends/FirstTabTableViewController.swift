@@ -13,10 +13,10 @@ class FirstTabTableViewController: UITableViewController, UISearchBarDelegate {
     @IBOutlet weak var searchBar: UISearchBar!
     
     var user: [UserList] = [
-        UserList(name: "Святослав", avatar: UIImage(named: "1")!, userImage: UIImage(named: "21")!),
-        UserList(name: "Лидия", avatar: UIImage(named: "2")!, userImage: UIImage(named: "22")!),
-        UserList(name: "Юрий", avatar: UIImage(named: "3")!, userImage: UIImage(named: "23")!),
-        UserList(name: "Зоя", avatar: UIImage(named: "4")!, userImage: UIImage(named: "24")!)
+        UserList(name: "Святослав", avatar: UIImage(named: "1")!, userImage: [UIImage(named: "1"), UIImage(named: "21")]),
+        UserList(name: "Лидия", avatar: UIImage(named: "2")!, userImage: [UIImage(named: "2"), UIImage(named: "22")]),
+        UserList(name: "Юрий", avatar: UIImage(named: "3")!, userImage: [UIImage(named: "3"), UIImage(named: "23")]),
+        UserList(name: "Зоя", avatar: UIImage(named: "4")!, userImage: [UIImage(named: "4"), UIImage(named: "24")])
     ]
     var userIndex = ["Л", "З", "С", "Ю"]
     var filtered = [UserList]()
@@ -112,8 +112,23 @@ class FirstTabTableViewController: UITableViewController, UISearchBarDelegate {
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "fromTableToCollection" {
-            if let destinationVC = segue.destination as? UsersPhotoCollectionViewController, let passedImage = sender as? UIImage {
-                destinationVC.photo = passedImage
+            if let destinationVC = segue.destination as? UsersPhotoCollectionViewController{
+                    if searching{
+                        if let indexPath = tableView.indexPathForSelectedRow{
+                            destinationVC.userImage = filtered[indexPath.row].userImage
+                        }
+                    } else {
+                    
+                    if let indexPath = tableView.indexPathForSelectedRow{
+                        var userRow = [UserList]()
+                        for a in user{
+                        if userIndex[indexPath.section].contains(a.name.first!){
+                        userRow.append(a)
+                            }
+                        }
+                        destinationVC.userImage = userRow[indexPath.row].userImage
+                        }
+                    }
             }
         }
     }

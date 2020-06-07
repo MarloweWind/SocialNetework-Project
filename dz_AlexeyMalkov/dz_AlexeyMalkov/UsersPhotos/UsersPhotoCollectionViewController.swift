@@ -12,7 +12,7 @@ private let reuseIdentifier = "Cell"
 
 class UsersPhotoCollectionViewController: UICollectionViewController {
     
-    var photo: UIImage?
+    var userImage = [UIImage?]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -20,11 +20,12 @@ class UsersPhotoCollectionViewController: UICollectionViewController {
     }
 
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 2
+        return userImage.count
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "usersPhoto", for: indexPath) as! PhotoCellCollectionViewCell
+        let photo = userImage[indexPath.row]
         cell.userPhoto.image = photo
         
         return cell

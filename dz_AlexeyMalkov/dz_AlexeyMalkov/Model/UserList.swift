@@ -12,5 +12,5 @@ import Foundation
 struct UserList{
     var name: String
     var avatar: UIImage
-    var userImage: UIImage
+    var userImage: [UIImage?]
 }
