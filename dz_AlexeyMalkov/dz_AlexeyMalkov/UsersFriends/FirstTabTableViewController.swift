@@ -21,8 +21,12 @@ class FirstTabTableViewController: UITableViewController, UISearchBarDelegate {
     var userIndex = ["Л", "З", "С", "Ю"]
     var filtered = [UserList]()
     var searching = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "loginNotification"), object: nil)
+        
     }
 
     //серчбар

@@ -18,6 +18,7 @@
 		1533CD012487B39E006325DF /* CustomNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1533CD002487B39E006325DF /* CustomNavigationController.swift */; };
 		15414B8F2471495000364498 /* AvatarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15414B8E2471495000364498 /* AvatarView.swift */; };
 		15414B9124715B2600364498 /* LikeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15414B9024715B2600364498 /* LikeView.swift */; };
+		1563F5842496382900DA3DE4 /* UserSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1563F5832496382900DA3DE4 /* UserSession.swift */; };
 		1564AD42246D5FFD00262B5B /* friendsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1564AD41246D5FFD00262B5B /* friendsTableViewCell.swift */; };
 		1564AD44246D70A200262B5B /* UsersPhotoCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1564AD43246D70A200262B5B /* UsersPhotoCollectionViewController.swift */; };
 		1564AD46246D710C00262B5B /* PhotoCellCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1564AD45246D710C00262B5B /* PhotoCellCollectionViewCell.swift */; };
@@ -48,6 +49,7 @@
 		1533CD002487B39E006325DF /* CustomNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomNavigationController.swift; sourceTree = "<group>"; };
 		15414B8E2471495000364498 /* AvatarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarView.swift; sourceTree = "<group>"; };
 		15414B9024715B2600364498 /* LikeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikeView.swift; sourceTree = "<group>"; };
+		1563F5832496382900DA3DE4 /* UserSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSession.swift; sourceTree = "<group>"; };
 		1564AD41246D5FFD00262B5B /* friendsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = friendsTableViewCell.swift; sourceTree = "<group>"; };
 		1564AD43246D70A200262B5B /* UsersPhotoCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsersPhotoCollectionViewController.swift; sourceTree = "<group>"; };
 		1564AD45246D710C00262B5B /* PhotoCellCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCellCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -145,6 +147,7 @@
 				1564AD54246D88AF00262B5B /* UserList.swift */,
 				1564AD56246D89D400262B5B /* GroupList.swift */,
 				152ABB16247BDBB30035B9EB /* FeedList.swift */,
+				1563F5832496382900DA3DE4 /* UserSession.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -263,6 +266,7 @@
 				15B73824245435590007C99C /* AppDelegate.swift in Sources */,
 				152ABB14247BD5230035B9EB /* FeedTableViewCell.swift in Sources */,
 				1564AD4A246D72B500262B5B /* UsersGroupsTableViewCell.swift in Sources */,
+				1563F5842496382900DA3DE4 /* UserSession.swift in Sources */,
 				1564AD57246D89D400262B5B /* GroupList.swift in Sources */,
 				1533CCFB2487B2E5006325DF /* PopAnimator.swift in Sources */,
 				1564AD55246D88AF00262B5B /* UserList.swift in Sources */,

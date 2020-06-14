@@ -17,13 +17,24 @@ class ViewController: UIViewController {
         
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let session = UserSession.instance
+        session.token = "TURAy5sXL7"
+        session.userId = 1
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(loginSuccess), name: NSNotification.Name(rawValue: "loginNotification"), object: nil)
+        
+    }
+    
+    @objc func loginSuccess(){
+        print("Пользователь успешно авторизировался")
     }
 
     @IBAction func loginButton(_ sender: UIButton) {
         let login = loginField.text!
         let password = passwordField.text!
         if login == "admin" && password == "123456"{
-            print("Успешная авторизация")
+            //print("Успешная авторизация")
             performSegue(withIdentifier: "fromAutorizationToTubbarSegue", sender: self)
         } else {
             let alert = UIAlertController(title: "Не правильный пароль", message: "Введите пароль еще раз", preferredStyle: .alert)
