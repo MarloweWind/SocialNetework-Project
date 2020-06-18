@@ -11,6 +11,7 @@ import Foundation
 class UserSession{
     
     static let instance = UserSession()
+//    static let shared: UserSession = .init()
     
     private init() {}
     

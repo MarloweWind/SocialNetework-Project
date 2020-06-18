@@ -18,10 +18,6 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let session = UserSession.instance
-        session.token = "TURAy5sXL7"
-        session.userId = 1
-        
         NotificationCenter.default.addObserver(self, selector: #selector(loginSuccess), name: NSNotification.Name(rawValue: "loginNotification"), object: nil)
         
     }
