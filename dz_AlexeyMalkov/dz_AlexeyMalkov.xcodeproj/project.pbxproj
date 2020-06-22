@@ -28,6 +28,8 @@
 		1564AD4E246D73E500262B5B /* GlobalGroupsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1564AD4D246D73E500262B5B /* GlobalGroupsTableViewCell.swift */; };
 		1564AD55246D88AF00262B5B /* UserList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1564AD54246D88AF00262B5B /* UserList.swift */; };
 		1564AD57246D89D400262B5B /* GroupList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1564AD56246D89D400262B5B /* GroupList.swift */; };
+		15719F7A249F724C00DDAB82 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15719F79249F724C00DDAB82 /* NetworkService.swift */; };
+		15719F7C249F733300DDAB82 /* Photo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15719F7B249F733300DDAB82 /* Photo.swift */; };
 		15A34A7B2485242E00083207 /* ScaleImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15A34A7A2485242E00083207 /* ScaleImage.swift */; };
 		15B73824245435590007C99C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15B73823245435590007C99C /* AppDelegate.swift */; };
 		15B73826245435590007C99C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15B73825245435590007C99C /* SceneDelegate.swift */; };
@@ -62,6 +64,8 @@
 		1564AD4D246D73E500262B5B /* GlobalGroupsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalGroupsTableViewCell.swift; sourceTree = "<group>"; };
 		1564AD54246D88AF00262B5B /* UserList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserList.swift; sourceTree = "<group>"; };
 		1564AD56246D89D400262B5B /* GroupList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupList.swift; sourceTree = "<group>"; };
+		15719F79249F724C00DDAB82 /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
+		15719F7B249F733300DDAB82 /* Photo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Photo.swift; sourceTree = "<group>"; };
 		15A34A7A2485242E00083207 /* ScaleImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScaleImage.swift; sourceTree = "<group>"; };
 		15B73820245435590007C99C /* dz_AlexeyMalkov.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = dz_AlexeyMalkov.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		15B73823245435590007C99C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -155,11 +159,20 @@
 			isa = PBXGroup;
 			children = (
 				1564AD54246D88AF00262B5B /* UserList.swift */,
+				15719F7B249F733300DDAB82 /* Photo.swift */,
 				1564AD56246D89D400262B5B /* GroupList.swift */,
 				152ABB16247BDBB30035B9EB /* FeedList.swift */,
 				1563F5832496382900DA3DE4 /* UserSession.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		15719F78249F71EA00DDAB82 /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				15719F79249F724C00DDAB82 /* NetworkService.swift */,
+			);
+			path = Service;
 			sourceTree = "<group>";
 		};
 		15B73817245435590007C99C = {
@@ -194,6 +207,7 @@
 				152ABB0F247BC1690035B9EB /* UsersFeed */,
 				1564AD53246D877A00262B5B /* Model */,
 				1533CCF92487B253006325DF /* Animations */,
+				15719F78249F71EA00DDAB82 /* Service */,
 				15B73829245435590007C99C /* Main.storyboard */,
 				15B7382C245435600007C99C /* Assets.xcassets */,
 				15B7382E245435600007C99C /* LaunchScreen.storyboard */,
@@ -335,6 +349,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				15719F7C249F733300DDAB82 /* Photo.swift in Sources */,
 				1564AD4E246D73E500262B5B /* GlobalGroupsTableViewCell.swift in Sources */,
 				15B73828245435590007C99C /* ViewController.swift in Sources */,
 				15A34A7B2485242E00083207 /* ScaleImage.swift in Sources */,
@@ -348,6 +363,7 @@
 				1564AD55246D88AF00262B5B /* UserList.swift in Sources */,
 				1533CCFF2487B363006325DF /* InteractiveManager.swift in Sources */,
 				1520851A245DF3D800C8EC4E /* FirstTabTableViewController.swift in Sources */,
+				15719F7A249F724C00DDAB82 /* NetworkService.swift in Sources */,
 				1564AD48246D71A100262B5B /* SecondTabTableViewController.swift in Sources */,
 				1533CD012487B39E006325DF /* CustomNavigationController.swift in Sources */,
 				15B73826245435590007C99C /* SceneDelegate.swift in Sources */,

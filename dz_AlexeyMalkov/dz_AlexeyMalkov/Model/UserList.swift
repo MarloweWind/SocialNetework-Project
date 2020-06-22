@@ -7,10 +7,30 @@
 //
 
 import UIKit
-import Foundation
 
-struct UserList{
-    var name: String
-    var avatar: UIImage
-    var userImage: [UIImage?]
+//struct UserList{
+//    var name: String
+//    var avatar: UIImage
+//    var userImage: [UIImage?]
+//}
+class UserList:  Decodable {
+    dynamic var firstName = ""
+    dynamic var lastName = ""
+    dynamic var avatar = ""
+    dynamic var id = 0
+    
+    
+    enum CodingKeys: String, CodingKey {
+        case firstName = "first_name"
+        case lastName = "last_name"
+        case avatar = "photo_100"
+        case id
+    }
+}
+
+class FriendResponse: Decodable {
+    let items: [UserList]
+}
+class FriendResponseContainer: Decodable {
+    let response: FriendResponse
 }
