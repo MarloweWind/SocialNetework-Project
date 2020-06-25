@@ -78,9 +78,9 @@ var cachedAvatars = [String: UIImage]()
         let cell = tableView.dequeueReusableCell(withIdentifier: "usersGropus", for: indexPath) as! UsersGroupsTableViewCell
         let groupName = sortedGroup[indexPath.row].groupName
         cell.groupName?.text = groupName
-        
-        let group = sortedGroup[indexPath.row] //почему не отображает изображение?
-        cell.groupAvatar.image = UIImage(named: group.groupAvatar) //почему не отображает изображение?
+        let group = sortedGroup[indexPath.row]
+        let url = URL(string: group.groupAvatar)
+        cell.groupAvatar.kf.setImage(with: url)
         
         return cell
     }

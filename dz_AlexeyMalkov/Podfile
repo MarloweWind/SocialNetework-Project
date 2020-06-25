@@ -6,6 +6,8 @@ target 'dz_AlexeyMalkov' do
   use_frameworks!
 
   pod 'Alamofire'
+  pod 'Kingfisher'
+  pod 'RealmSwift'
   # Pods for dz_AlexeyMalkov
 
 end

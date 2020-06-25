@@ -8,12 +8,13 @@
 
 import UIKit
 import Foundation
+import RealmSwift
 
 //struct GroupList {
 //    var groupName: String
 //    var groupAvatar: UIImage?
 //}
-class GroupList: Decodable {
+class GroupList: Object, Decodable {
     dynamic var groupAvatar = ""
     dynamic var groupName = ""
     

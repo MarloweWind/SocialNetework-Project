@@ -60,6 +60,9 @@ class GlobalGroupsTebleViewController: UITableViewController, UISearchBarDelegat
         let cell = tableView.dequeueReusableCell(withIdentifier: "globalGroups", for: indexPath) as! GlobalGroupsTableViewCell
         let groupName = sortedGroup[indexPath.row].groupName
         cell.globalGroupName?.text = groupName
+        let group = sortedGroup[indexPath.row]
+        let url = URL(string: group.groupAvatar)
+        cell.globalGroupAvatar.kf.setImage(with: url)
         
         return cell
     }

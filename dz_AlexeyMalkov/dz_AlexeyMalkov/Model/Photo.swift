@@ -7,6 +7,13 @@
 //
 
 import UIKit
+import RealmSwift
+
+class Size: Object, Decodable {
+    @objc dynamic var url = ""
+    @objc dynamic var width = 0
+    @objc dynamic var height = 0
+}
 
 class PhotoResponseContainer: Decodable {
     let response: PhotoResponse
@@ -16,12 +23,6 @@ class PhotoResponse: Decodable {
     let items: [Photo]
 }
 
-class Photo: Decodable {
-    dynamic var sizes: [Size]
-}
-
-class Size: Decodable {
-    dynamic var url: String
-    dynamic var width = 0
-    dynamic var height = 0
+class Photo: Object, Decodable {
+    var sizes = List<Size>()
 }

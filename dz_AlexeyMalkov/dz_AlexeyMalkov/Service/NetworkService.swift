@@ -10,6 +10,8 @@ import UIKit
 import Alamofire
 
 class NetworkService {
+    
+    var dataService = DataService()
     let baseUrl = "https://api.vk.com"
     var apiKey = UserSession.shared.token
     
@@ -28,8 +30,10 @@ class NetworkService {
             guard let data = response.value else { return }
             print(response)
             let response = try? JSONDecoder().decode(FriendResponseContainer.self, from: data)
+            let users = response?.response.items ?? []
+            self.dataService.save(users)
             
-            completion(response?.response.items ?? [])
+            completion(users)
         }
     }
     
@@ -46,10 +50,12 @@ class NetworkService {
         
         AF.request(url, method: .get, parameters: parameters).responseData { response in
             guard let data = response.value else { return }
-//            print(response)
+            print(response)
             let response = try? JSONDecoder().decode(PhotoResponseContainer.self, from: data)
+            let photos = response?.response.items ?? []
+            self.dataService.save(photos)
             
-            completion(response?.response.items ?? [])
+            completion(photos)
         }
     }
     
@@ -68,8 +74,10 @@ class NetworkService {
             guard let data = response.value else { return }
             print(response)
             let response = try? JSONDecoder().decode(CommunityResponseContainer.self, from: data)
+            let groups = response?.response.items ?? []
+            self.dataService.save(groups)
             
-            completion(response?.response.items ?? [])
+            completion(groups)
         }
     }
     
@@ -87,8 +95,10 @@ class NetworkService {
             guard let data = response.value else { return }
             print(response)
             let response = try? JSONDecoder().decode(CommunityResponseContainer.self, from: data)
+            let groups = response?.response.items ?? []
+            self.dataService.save(groups)
             
-            completion(response?.response.items ?? [])
+            completion(groups)
         }
     }
 }

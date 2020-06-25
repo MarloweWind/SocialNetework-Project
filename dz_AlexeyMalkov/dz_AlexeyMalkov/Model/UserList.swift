@@ -7,13 +7,13 @@
 //
 
 import UIKit
-
+import RealmSwift
 //struct UserList{
 //    var name: String
 //    var avatar: UIImage
 //    var userImage: [UIImage?]
 //}
-class UserList:  Decodable {
+class UserList: Object, Decodable {
     dynamic var firstName = ""
     dynamic var lastName = ""
     dynamic var avatar = ""

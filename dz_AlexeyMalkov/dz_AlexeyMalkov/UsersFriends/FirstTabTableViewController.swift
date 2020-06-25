@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 class FirstTabTableViewController: UITableViewController, UISearchBarDelegate {
     
@@ -153,6 +154,8 @@ class FirstTabTableViewController: UITableViewController, UISearchBarDelegate {
         let users = sortedUsers[firstCharUsers]!
         let user: UserList = users[indexPath.row]
         cell.nameLabel.text = user.lastName + " " + user.firstName
+        let url = URL(string: user.avatar)
+        cell.avatarImageView.kf.setImage(with: url)
 
         return cell
     }
