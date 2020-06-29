@@ -87,65 +87,40 @@ class FirstTabTableViewController: UITableViewController, UISearchBarDelegate {
         return sortedUsers[keysSorted[section]]?.count ?? 0
     }
     
-//    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        let cell = tableView.cellForRow(at: indexPath) as! friendsTableViewCell
-//
-//        let scale = CGAffineTransform(scaleX: 0.8, y: 0.8)
-//        cell.avatarImageView.transform = scale
-//        cell.avatarImageView.alpha = 0.5
-//
-//        UIView.animate(withDuration: 0.5,
-//                       delay: 0,
-//                       usingSpringWithDamping: 0.5,
-//                       initialSpringVelocity: 0,
-//                       options: [.curveEaseInOut],
-//                       animations: {
-//                        cell.avatarImageView.transform = .identity
-//                        cell.avatarImageView.alpha = 1
-//
-//        }, completion: { finished in
-//            guard finished else { return }
-//
-//            if self.searching {
-//                let passedImage = self.filtered[indexPath.row].userImage
-//                self.performSegue(withIdentifier: "fromTableToCollection", sender: passedImage)
-//            } else {
-//                var userRow = [UserList]()
-//
-//                for a in self.user {
-//                    if self.userIndex[indexPath.section].contains(a.name.first!){
-//                        userRow.append(a)
-//                    }
-//                }
-//
-//                let passedImage = userRow[indexPath.row].userImage
-//                self.performSegue(withIdentifier: "fromTableToCollection", sender: passedImage)
-//            }
-//        })
-//    }
-//
-//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-//        if segue.identifier == "fromTableToCollection" {
-//            if let destinationVC = segue.destination as? UsersPhotoCollectionViewController{
-//                    if searching{
-//                        if let indexPath = tableView.indexPathForSelectedRow{
-//                            destinationVC.userImage = filtered[indexPath.row].userImage
-//                        }
-//                    } else {
-//
-//                    if let indexPath = tableView.indexPathForSelectedRow{
-//                        var userRow = [UserList]()
-//                        for a in user{
-//                        if userIndex[indexPath.section].contains(a.name.first!){
-//                        userRow.append(a)
-//                            }
-//                        }
-//                        destinationVC.userImage = userRow[indexPath.row].userImage
-//                        }
-//                    }
-//            }
-//        }
-//    }
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "showProfile",
+            let destinationVC = segue.destination as? UsersProfile,
+            let indexPath = tableView.indexPathForSelectedRow {
+            let firstCharUsers = sortedUsers.keys.sorted()[indexPath.section]
+            let users = sortedUsers[firstCharUsers]!
+            let user = users[indexPath.row]
+            let usersNameTitle = user.lastName + user.firstName
+            let url = URL(string: user.avatar)
+            let usersName = user.lastName + " " + user.firstName
+            destinationVC.title = usersNameTitle
+            destinationVC.iamgeURL = url
+            destinationVC.namedUser = usersName
+            destinationVC.user = user
+        }
+    }
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let cell = tableView.cellForRow(at: indexPath) as! friendsTableViewCell
+        
+        let scale = CGAffineTransform(scaleX: 0.8, y: 0.8)
+        cell.avatarImageView.transform = scale
+        cell.avatarImageView.alpha = 0.5
+
+        UIView.animate(withDuration: 0.5,
+                       delay: 0,
+                       usingSpringWithDamping: 0.5,
+                       initialSpringVelocity: 0,
+                       options: [.curveEaseInOut],
+                       animations: {
+                        cell.avatarImageView.transform = .identity
+                        cell.avatarImageView.alpha = 1
+                        
+        })
+    }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "userInfoCell", for: indexPath) as! friendsTableViewCell
@@ -156,7 +131,7 @@ class FirstTabTableViewController: UITableViewController, UISearchBarDelegate {
         cell.nameLabel.text = user.lastName + " " + user.firstName
         let url = URL(string: user.avatar)
         cell.avatarImageView.kf.setImage(with: url)
-
+        
         return cell
     }
 }

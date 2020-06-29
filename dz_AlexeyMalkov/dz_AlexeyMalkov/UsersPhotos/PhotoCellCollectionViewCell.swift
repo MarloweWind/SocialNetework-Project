@@ -11,7 +11,6 @@ import UIKit
 class PhotoCellCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var userPhoto: ScaleImage!
-    //    @IBOutlet weak var userPhoto: UIImageView!
     @IBOutlet weak var ViewLike: LikeView!
     
 }

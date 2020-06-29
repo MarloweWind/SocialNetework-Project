@@ -16,6 +16,7 @@
 		1533CCFD2487B304006325DF /* PushAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1533CCFC2487B304006325DF /* PushAnimator.swift */; };
 		1533CCFF2487B363006325DF /* InteractiveManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1533CCFE2487B363006325DF /* InteractiveManager.swift */; };
 		1533CD012487B39E006325DF /* CustomNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1533CD002487B39E006325DF /* CustomNavigationController.swift */; };
+		1533E23024A9DA6D00606C44 /* UsersProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1533E22F24A9DA6D00606C44 /* UsersProfile.swift */; };
 		15414B8F2471495000364498 /* AvatarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15414B8E2471495000364498 /* AvatarView.swift */; };
 		15414B9124715B2600364498 /* LikeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15414B9024715B2600364498 /* LikeView.swift */; };
 		1563F5842496382900DA3DE4 /* UserSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1563F5832496382900DA3DE4 /* UserSession.swift */; };
@@ -53,6 +54,7 @@
 		1533CCFC2487B304006325DF /* PushAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushAnimator.swift; sourceTree = "<group>"; };
 		1533CCFE2487B363006325DF /* InteractiveManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InteractiveManager.swift; sourceTree = "<group>"; };
 		1533CD002487B39E006325DF /* CustomNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomNavigationController.swift; sourceTree = "<group>"; };
+		1533E22F24A9DA6D00606C44 /* UsersProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsersProfile.swift; sourceTree = "<group>"; };
 		15414B8E2471495000364498 /* AvatarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarView.swift; sourceTree = "<group>"; };
 		15414B9024715B2600364498 /* LikeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikeView.swift; sourceTree = "<group>"; };
 		1563F5832496382900DA3DE4 /* UserSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSession.swift; sourceTree = "<group>"; };
@@ -119,6 +121,14 @@
 				1533CCFC2487B304006325DF /* PushAnimator.swift */,
 			);
 			path = Animations;
+			sourceTree = "<group>";
+		};
+		1533E22C24A9DA0800606C44 /* UsersProfile */ = {
+			isa = PBXGroup;
+			children = (
+				1533E22F24A9DA6D00606C44 /* UsersProfile.swift */,
+			);
+			path = UsersProfile;
 			sourceTree = "<group>";
 		};
 		1564AD4F246D867600262B5B /* UsersFriends */ = {
@@ -204,6 +214,7 @@
 				15B73827245435590007C99C /* ViewController.swift */,
 				15CF2598249A81A30077B9AC /* VKLoginController.swift */,
 				1564AD4F246D867600262B5B /* UsersFriends */,
+				1533E22C24A9DA0800606C44 /* UsersProfile */,
 				1564AD50246D86C600262B5B /* UsersPhotos */,
 				1564AD51246D86E900262B5B /* UsersGroups */,
 				1564AD52246D872200262B5B /* GlobalGroups */,
@@ -368,6 +379,7 @@
 				1533CCFF2487B363006325DF /* InteractiveManager.swift in Sources */,
 				1520851A245DF3D800C8EC4E /* FirstTabTableViewController.swift in Sources */,
 				15719F7A249F724C00DDAB82 /* NetworkService.swift in Sources */,
+				1533E23024A9DA6D00606C44 /* UsersProfile.swift in Sources */,
 				1564AD48246D71A100262B5B /* SecondTabTableViewController.swift in Sources */,
 				1533CD012487B39E006325DF /* CustomNavigationController.swift in Sources */,
 				15B73826245435590007C99C /* SceneDelegate.swift in Sources */,
