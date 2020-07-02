@@ -11,10 +11,13 @@ import RealmSwift
 
 class DataService {
     
-    func save(_ array: [Object]) {
+    func save<T: Object>(_ array: [T]) {
         
         let realm = try? Realm()
         realm?.beginWrite()
+        if let oldData = realm?.objects(T.self) {
+            realm?.delete(Array(oldData))
+        }
         realm?.add(array)
         try? realm?.commitWrite()
     }
@@ -41,11 +44,11 @@ class DataService {
             return []
         }
     }
-    func photos() -> [Size] {
+    func photos() -> [Photo] {
         do {
             
             let realm = try Realm()
-            let objects = realm.objects(Size.self)
+            let objects = realm.objects(Photo.self)
             return Array(objects)
         }
         catch {

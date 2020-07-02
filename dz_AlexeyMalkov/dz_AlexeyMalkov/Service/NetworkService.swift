@@ -11,9 +11,17 @@ import Alamofire
 
 class NetworkService {
     
-    var dataService = DataService()
+    var dataService: DataService = .init()
     let baseUrl = "https://api.vk.com"
     var apiKey = UserSession.shared.token
+    let userDefaults = UserDefaults.standard
+    
+    func timeintervalSinceLastUpdate(for key: String) -> TimeInterval {
+        let now = Date().timeIntervalSince1970
+        let lastUpdate = userDefaults.value(forKey: key) as? Double ?? 0.0
+        
+        return now - lastUpdate
+    }
     
     func loadFriends(userId: Int, completion: @escaping ([UserList]) -> Void) {
         let path = "/method/friends.get?"
@@ -32,6 +40,7 @@ class NetworkService {
             let response = try? JSONDecoder().decode(FriendResponseContainer.self, from: data)
             let users = response?.response.items ?? []
             self.dataService.save(users)
+            self.userDefaults.set(Date().timeIntervalSince1970, forKey: UserList.className())
             
             completion(users)
         }
@@ -54,6 +63,7 @@ class NetworkService {
             let response = try? JSONDecoder().decode(PhotoResponseContainer.self, from: data)
             let photos = response?.response.items ?? []
             self.dataService.save(photos)
+            self.userDefaults.set(Date().timeIntervalSince1970, forKey: Photo.className())
             
             completion(photos)
         }
@@ -76,6 +86,7 @@ class NetworkService {
             let response = try? JSONDecoder().decode(CommunityResponseContainer.self, from: data)
             let groups = response?.response.items ?? []
             self.dataService.save(groups)
+            self.userDefaults.set(Date().timeIntervalSince1970, forKey: GroupList.className())
             
             completion(groups)
         }
@@ -97,6 +108,7 @@ class NetworkService {
             let response = try? JSONDecoder().decode(CommunityResponseContainer.self, from: data)
             let groups = response?.response.items ?? []
             self.dataService.save(groups)
+            self.userDefaults.set(Date().timeIntervalSince1970, forKey: GroupList.className())
             
             completion(groups)
         }

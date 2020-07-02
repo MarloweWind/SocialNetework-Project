@@ -7,22 +7,35 @@
 //
 
 import UIKit
+import Kingfisher
+import RealmSwift
 
 class SecondTabTableViewController: UITableViewController, UISearchBarDelegate {
 
     @IBOutlet weak var searchBar: UISearchBar!
     
     let networkService = NetworkService()
+    var dataBase = DataService()
     
+    var groups = [GroupList]()
     var sortedGroup = [GroupList]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         searchBar.delegate = self
-        networkService.loadUserGroups(userId: UserSession.shared.userId) { group in
-            self.sortedGroup = self.sort(groups: group)
+        let cachedGroup = dataBase.groups()
+        let sinceLastUpdate = networkService.timeintervalSinceLastUpdate(for: GroupList.className())
+        if cachedGroup.isEmpty || sinceLastUpdate > 3600 {
+            networkService.loadUserGroups(userId: UserSession.shared.userId) { group in
+                self.sortedGroup = self.sort(groups: group)
+                self.groups = group
+                self.tableView?.reloadData()
+            }
+        } else {
+            self.sortedGroup = self.sort(groups: cachedGroup)
+            self.groups = cachedGroup
             self.tableView?.reloadData()
-        }
+        }        
     }
     
     private func sort(groups: [GroupList], prefix: String = "") ->[GroupList] {
@@ -73,7 +86,7 @@ class SecondTabTableViewController: UITableViewController, UISearchBarDelegate {
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return sortedGroup.count
     }
-var cachedAvatars = [String: UIImage]()
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "usersGropus", for: indexPath) as! UsersGroupsTableViewCell
         let groupName = sortedGroup[indexPath.row].groupName

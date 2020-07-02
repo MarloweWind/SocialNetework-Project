@@ -8,12 +8,14 @@
 
 import UIKit
 import Kingfisher
+import RealmSwift
 
 class FirstTabTableViewController: UITableViewController, UISearchBarDelegate {
     
     @IBOutlet weak var searchBar: UISearchBar!
     
     var networkService = NetworkService()
+    var dataBase = DataService()
     
     var user = [UserList]()
     var sectionIndexTitles: [String] = []
@@ -24,10 +26,18 @@ class FirstTabTableViewController: UITableViewController, UISearchBarDelegate {
         
         self.sortedUsers = sort(friends: user)
         searchBar.delegate = self
-        
-        networkService.loadFriends(userId: UserSession.shared.userId) { user in
-            self.sortedUsers = self.sort(friends: user)
-            self.tableView.reloadData()
+        let cachedUser = dataBase.users()
+        let sinceLastUpdate = networkService.timeintervalSinceLastUpdate(for: UserList.className())
+        if cachedUser.isEmpty || sinceLastUpdate > 3600 {
+            networkService.loadFriends(userId: UserSession.shared.userId) { user in
+                self.sortedUsers = self.sort(friends: user)
+                self.user = user
+                self.tableView?.reloadData()
+            }
+        } else {
+            self.sortedUsers = self.sort(friends: cachedUser)
+            self.user = cachedUser
+            self.tableView?.reloadData()
         }
         
     }
