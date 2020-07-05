@@ -8,6 +8,7 @@ target 'dz_AlexeyMalkov' do
   pod 'Alamofire'
   pod 'Kingfisher'
   pod 'RealmSwift'
+  pod 'SwiftyJSON'
   # Pods for dz_AlexeyMalkov
 
 end

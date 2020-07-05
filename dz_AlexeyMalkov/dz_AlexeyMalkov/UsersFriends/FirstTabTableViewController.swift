@@ -14,62 +14,37 @@ class FirstTabTableViewController: UITableViewController, UISearchBarDelegate {
     
     @IBOutlet weak var searchBar: UISearchBar!
     
-    var networkService = NetworkService()
-    var dataBase = DataService()
-    
-    var user = [UserList]()
     var sectionIndexTitles: [String] = []
-    var sortedUsers = [Character: [UserList]]()
+    let user = realm.objects(UserListRealm.self)
+    var sortedUsers = realm.objects(UserListRealm.self)
+    var token: NotificationToken?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        self.sortedUsers = sort(friends: user)
         searchBar.delegate = self
-        let cachedUser = dataBase.users()
-        let sinceLastUpdate = networkService.timeintervalSinceLastUpdate(for: UserList.className())
-        if cachedUser.isEmpty || sinceLastUpdate > 3600 {
-            networkService.loadFriends(userId: UserSession.shared.userId) { user in
-                self.sortedUsers = self.sort(friends: user)
-                self.user = user
-                self.tableView?.reloadData()
-            }
-        } else {
-            self.sortedUsers = self.sort(friends: cachedUser)
-            self.user = cachedUser
-            self.tableView?.reloadData()
-        }
+        loadFriends()
+        self.tableView.reloadData()
         
-    }
-
-    //серчбар
-    private func sort(friends: [UserList], prefix: String = "") ->[Character: [UserList]] {
-        var userDict = [Character: [UserList]]()
-
-        friends.forEach { user in
-            guard let firstCharUsers = user.lastName.first else { return }
-            if !prefix.isEmpty && !user.lastName.lowercased().contains(prefix.lowercased()) {
-                return
-            }
-            if var thisCharUsers = userDict[firstCharUsers] {
-                thisCharUsers.append(user)
-                userDict[firstCharUsers] = thisCharUsers.sorted(by: { $0.lastName < $1.lastName })
-            } else {
-                userDict[firstCharUsers] = [user]
-            }
-        }
-        return userDict
+        self.token = sortedUsers.observe({ (changes: RealmCollectionChange) in
+            switch changes{
+            case .initial(let result):
+                print(result)
+            case.update(_, deletions: _, insertions: _, modifications: _):
+                self.tableView.reloadData()
+            case.error(let error):
+                print(error.localizedDescription)
+                       }
+        })
     }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        self.sortedUsers = sort(friends: user)
-        tableView.reloadData()
-        if searchText == "" {
-            viewDidLoad()
-        } else {
-            self.sortedUsers = sort(friends: user)
+        guard !searchText.isEmpty else{
+            sortedUsers = user
             tableView.reloadData()
+            return
         }
+        sortedUsers = user.filter(" firstName BEGINSWITH '\(searchBar.text!)'")
+        tableView.reloadData()
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
@@ -78,41 +53,39 @@ class FirstTabTableViewController: UITableViewController, UISearchBarDelegate {
         viewDidLoad()
     }
     
-    override func numberOfSections(in tableView: UITableView) -> Int {
-        return sortedUsers.keys.count
-    }
+//    override func numberOfSections(in tableView: UITableView) -> Int {
+//        return sortedUsers.count
+//    }
     
-    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        let firstCharUsers = sortedUsers.keys.sorted()[section]
-        return String(firstCharUsers)
-    }
+//    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+//        let firstCharUsers = sortedUsers.keys.sorted()[section]
+//        return String(firstCharUsers)
+//    }
     
-    override func sectionIndexTitles(for tableView: UITableView) -> [String]? {
-        let firstCharUsers = sortedUsers.keys.sorted()
-        return firstCharUsers.map({ String($0) })
-    }
+//    override func sectionIndexTitles(for tableView: UITableView) -> [String]? {
+//        let firstCharUsers = sortedUsers.keys.sorted()
+//        return firstCharUsers.map({ String($0) })
+//    }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let keysSorted = sortedUsers.keys.sorted()
-        return sortedUsers[keysSorted[section]]?.count ?? 0
+        return sortedUsers.count
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "showProfile",
             let destinationVC = segue.destination as? UsersProfile,
-            let indexPath = tableView.indexPathForSelectedRow {
-            let firstCharUsers = sortedUsers.keys.sorted()[indexPath.section]
-            let users = sortedUsers[firstCharUsers]!
-            let user = users[indexPath.row]
+            let indexPath = tableView.indexPathForSelectedRow{
+            let user = sortedUsers[indexPath.row]
             let usersNameTitle = user.lastName + user.firstName
             let url = URL(string: user.avatar)
             let usersName = user.lastName + " " + user.firstName
             destinationVC.title = usersNameTitle
             destinationVC.iamgeURL = url
             destinationVC.namedUser = usersName
-            destinationVC.user = user
+            destinationVC.id = sortedUsers[indexPath.row].id
         }
     }
+    
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let cell = tableView.cellForRow(at: indexPath) as! friendsTableViewCell
         
@@ -134,13 +107,8 @@ class FirstTabTableViewController: UITableViewController, UISearchBarDelegate {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "userInfoCell", for: indexPath) as! friendsTableViewCell
-        
-        let firstCharUsers = sortedUsers.keys.sorted()[indexPath.section]
-        let users = sortedUsers[firstCharUsers]!
-        let user: UserList = users[indexPath.row]
-        cell.nameLabel.text = user.lastName + " " + user.firstName
-        let url = URL(string: user.avatar)
-        cell.avatarImageView.kf.setImage(with: url)
+        let object = sortedUsers[indexPath.row]
+        cell.setUser(object: object)
         
         return cell
     }

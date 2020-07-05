@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 class friendsTableViewCell: UITableViewCell {
 
@@ -24,5 +25,10 @@ class friendsTableViewCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
-
+    func setUser(object: UserListRealm){
+        let url = URL(string: object.avatar)
+        self.nameLabel.text = object.firstName + " " + object.lastName
+//        self.lastName.text = object.userLastName
+        self.avatarImageView.kf.setImage(with: url)
+    }
 }

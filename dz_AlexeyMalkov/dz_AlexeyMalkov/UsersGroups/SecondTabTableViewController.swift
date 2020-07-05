@@ -14,52 +14,39 @@ class SecondTabTableViewController: UITableViewController, UISearchBarDelegate {
 
     @IBOutlet weak var searchBar: UISearchBar!
     
-    let networkService = NetworkService()
-    var dataBase = DataService()
+    var token: NotificationToken?
     
-    var groups = [GroupList]()
-    var sortedGroup = [GroupList]()
+    let group = realm.objects(GroupListRealm.self)
+    var sortedGroup = realm.objects(GroupListRealm.self)
     
     override func viewDidLoad() {
         super.viewDidLoad()
         searchBar.delegate = self
-        let cachedGroup = dataBase.groups()
-        let sinceLastUpdate = networkService.timeintervalSinceLastUpdate(for: GroupList.className())
-        if cachedGroup.isEmpty || sinceLastUpdate > 3600 {
-            networkService.loadUserGroups(userId: UserSession.shared.userId) { group in
-                self.sortedGroup = self.sort(groups: group)
-                self.groups = group
-                self.tableView?.reloadData()
-            }
-        } else {
-            self.sortedGroup = self.sort(groups: cachedGroup)
-            self.groups = cachedGroup
-            self.tableView?.reloadData()
-        }        
-    }
-    
-    private func sort(groups: [GroupList], prefix: String = "") ->[GroupList] {
-        var result = [GroupList]()
+        loadUserGroups()
+        self.tableView.reloadData()
         
-        groups.forEach { group in
-            if !prefix.isEmpty && !group.groupName.lowercased().contains(prefix.lowercased()) {
-                return
-            }
-            result.append(group)
-        }
-        return result
+        self.token = sortedGroup.observe({ (changes: RealmCollectionChange) in
+            switch changes{
+            case .initial(let result):
+                print(result)
+            case.update(_, deletions: _, insertions: _, modifications: _):
+                self.tableView.reloadData()
+            case.error(let error):
+                print(error.localizedDescription)
+                       }
+        })
     }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        self.sortedGroup = self.sort(groups: sortedGroup, prefix: searchText)
-        tableView.reloadData()
-        if searchText == "" {
-            viewDidLoad()
-        } else {
-            self.sortedGroup = self.sort(groups: sortedGroup, prefix: searchText)
+        guard !searchText.isEmpty else{
+            sortedGroup = group
             tableView.reloadData()
+            return
         }
+        sortedGroup = group.filter(" groupName BEGINSWITH '\(searchBar.text!)'")
+        tableView.reloadData()
     }
+    
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         searchBar.text = ""
         tableView.reloadData()
@@ -73,15 +60,15 @@ class SecondTabTableViewController: UITableViewController, UISearchBarDelegate {
 //        }
 //    }
 
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "addGroup", let globalGroupsTebleViewController = segue.destination as? GlobalGroupsTebleViewController {
-            globalGroupsTebleViewController.delegate = self
-        }
-    }
+//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+//        if segue.identifier == "addGroup", let globalGroupsTebleViewController = segue.destination as? GlobalGroupsTebleViewController {
+//            globalGroupsTebleViewController.delegate = self
+//        }
+//    }
     
-    override func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
-    }
+//    override func numberOfSections(in tableView: UITableView) -> Int {
+//        return 1
+//    }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return sortedGroup.count
@@ -89,19 +76,16 @@ class SecondTabTableViewController: UITableViewController, UISearchBarDelegate {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "usersGropus", for: indexPath) as! UsersGroupsTableViewCell
-        let groupName = sortedGroup[indexPath.row].groupName
-        cell.groupName?.text = groupName
-        let group = sortedGroup[indexPath.row]
-        let url = URL(string: group.groupAvatar)
-        cell.groupAvatar.kf.setImage(with: url)
+        let object = sortedGroup[indexPath.row]
+        cell.setGroup(object: object)
         
         return cell
     }
 }
 
-extension SecondTabTableViewController: GlobalGroupsTebleViewControllerDelegate {
-    func didSelectGroupList(list: GroupList) {
-        sortedGroup.append(list)
-        tableView.reloadData()
-    }
-}
+//extension SecondTabTableViewController: GlobalGroupsTebleViewControllerDelegate {
+//    func didSelectGroupList(list: GroupList) {
+//        sortedGroup.append(list)
+//        tableView.reloadData()
+//    }
+//}

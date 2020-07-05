@@ -9,24 +9,36 @@
 import UIKit
 import Foundation
 import RealmSwift
+import SwiftyJSON
 
 //struct GroupList {
 //    var groupName: String
 //    var groupAvatar: UIImage?
 //}
-class GroupList: Object, Decodable {
-    dynamic var groupAvatar = ""
-    dynamic var groupName = ""
-    
-    enum CodingKeys: String, CodingKey {
-        case groupName = "name"
-        case groupAvatar = "photo_100"
+class GroupListRealm: Object {
+    @objc dynamic var groupId: Int = 0
+    @objc dynamic var groupName: String = ""
+    @objc dynamic var groupAvatar: String = ""
+   
+    override class func primaryKey() -> String? {
+        return "groupId"
     }
 }
 
-class CommunityResponse: Decodable {
-    let items: [GroupList]
-}
-class CommunityResponseContainer: Decodable {
-    let response: CommunityResponse
+struct GroupList: Equatable {
+    
+    let groupId: Int
+    var groupName: String = ""
+    var groupAvatar: String = ""
+    
+    init(id: Int) {
+        self.groupId = id
+    }
+    
+    init(json: JSON) {
+        let id = json["id"].intValue
+        self.init(id: id)
+        self.groupName = json["name"].stringValue
+        self.groupAvatar = json["photo_50"].stringValue
+    }
 }

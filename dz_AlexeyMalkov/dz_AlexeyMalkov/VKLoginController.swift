@@ -14,9 +14,6 @@ class VKLoginController: UIViewController, WKNavigationDelegate{
 
     @IBOutlet weak var webView: WKWebView!
     
-//    var token = ""
-//    var userId = ""
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         var urlComponents = URLComponents()
@@ -31,7 +28,6 @@ class VKLoginController: UIViewController, WKNavigationDelegate{
             URLQueryItem(name: "response_type", value: "token"),
             URLQueryItem(name: "v", value: "5.68")
         ]
-        
         let request = URLRequest(url: urlComponents.url!)
         webView.navigationDelegate = self
         webView.load(request)
@@ -58,7 +54,7 @@ extension VKLoginController{
         }
               
         let token = params["access_token"]
-        let userID = params["access_userId"] ?? ""
+        let userID = params["user_id"] ?? ""
         UserSession.shared.userId = Int(userID) ?? 0
         UserSession.shared.token = token ?? ""
         print(token ?? "false")

@@ -7,7 +7,7 @@
 //
 
 import UIKit
-
+import Kingfisher
 class UsersGroupsTableViewCell: UITableViewCell {
 
     @IBOutlet weak var groupAvatar: UIImageView!
@@ -23,5 +23,9 @@ class UsersGroupsTableViewCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
-
+    func setGroup (object: GroupListRealm){
+        let url = URL(string: object.groupAvatar)
+        self.groupName.text = object.groupName
+        self.groupAvatar.kf.setImage(with: url)
+    }
 }

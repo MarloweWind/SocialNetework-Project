@@ -12,4 +12,9 @@ class UsersProfileCell: UICollectionViewCell {
     
     @IBOutlet weak var photoImage: ScaleImage!
     @IBOutlet weak var viewLike: LikeView!
+    
+    func setImage(object: Photo){
+           let url = URL(string: object.photo_1280)
+           self.photoImage.kf.setImage(with: url)
+       }
 }

@@ -8,109 +8,108 @@
 
 import UIKit
 import Alamofire
+import SwiftyJSON
+import RealmSwift
 
 class NetworkService {
     
-    var dataService: DataService = .init()
-    let baseUrl = "https://api.vk.com"
-    var apiKey = UserSession.shared.token
-    let userDefaults = UserDefaults.standard
-    
-    func timeintervalSinceLastUpdate(for key: String) -> TimeInterval {
-        let now = Date().timeIntervalSince1970
-        let lastUpdate = userDefaults.value(forKey: key) as? Double ?? 0.0
+    static let instance = NetworkService()
         
-        return now - lastUpdate
+        private init(){}
+        
+        var token: String = ""
+        var userID: Int = 0
     }
     
-    func loadFriends(userId: Int, completion: @escaping ([UserList]) -> Void) {
-        let path = "/method/friends.get?"
-        
-        let parameters: Parameters = [
-            "userId": userId,
-            "fields": "bdate,photo_100",
-            "access_token": apiKey,
-            "v": 5.103
+    let realm = try! Realm()
+    var apiKey = UserSession.shared.token
+    var id = UserSession.shared.userId
+
+    func loadFriends() {
+        let parameters : Parameters = [
+            "user_id" : id,
+            "access_token" : apiKey,
+            "fields" : "bdate, photo_50",
+            "v" : "5.110"
         ]
-        let url = baseUrl + path
-        
-        AF.request(url, method: .get, parameters: parameters).responseData { response in
-            guard let data = response.value else { return }
-            print(response)
-            let response = try? JSONDecoder().decode(FriendResponseContainer.self, from: data)
-            let users = response?.response.items ?? []
-            self.dataService.save(users)
-            self.userDefaults.set(Date().timeIntervalSince1970, forKey: UserList.className())
+        AF.request("https://api.vk.com/method/friends.get", parameters: parameters).validate().responseJSON { (responce) in
+            let json = JSON(responce.value!)
+            let userList = json["response"]["items"]
             
-            completion(users)
+            for users in userList{
+                let user = UserListRealm()
+                user.id = users.1["id"].intValue
+                user.firstName = users.1["first_name"].stringValue
+                user.lastName = users.1["last_name"].stringValue
+                user.avatar = users.1["photo_50"].stringValue
+                
+                do{
+                    try realm.write {
+                        realm.add(user, update: .all)
+                    }
+                }catch{
+                    print(error.localizedDescription)
+                }
+            }
         }
     }
     
-    func loadPhotos(userId: Int, completion: @escaping ([Photo]) -> Void) {
-        let path = "/method/photos.get?"
-        let parameters: Parameters = [
-            "userId": userId,
-            "album_id": "wall",
-            "owner_id": userId,
-            "access_token": apiKey,
-            "v": 5.103
+    func loadPhotos(user_id: String, completion: @escaping ([Photo]) -> ()) {
+        let parameters : Parameters = [
+            "owner_id" : "\(user_id)",
+            "album_id" : "profile",
+            "access_token" : apiKey,
+            "v" : "5.60"
         ]
-        let url = baseUrl + path
-        
-        AF.request(url, method: .get, parameters: parameters).responseData { response in
-            guard let data = response.value else { return }
-            print(response)
-            let response = try? JSONDecoder().decode(PhotoResponseContainer.self, from: data)
-            let photos = response?.response.items ?? []
-            self.dataService.save(photos)
-            self.userDefaults.set(Date().timeIntervalSince1970, forKey: Photo.className())
-            
+        AF.request("https://api.vk.com/method/photos.get", parameters: parameters).responseJSON { (responce) in
+            let json = JSON(responce.value!)
+            let photos = json["response"]["items"].map{
+                Photo(json: $0.1)
+            }
             completion(photos)
         }
     }
-    
-    func loadUserGroups(userId: Int, completion: @escaping ([GroupList]) -> Void) {
-        let path = "/method/groups.get?"
-        let parameters: Parameters = [
-            "userId": userId,
-            "extended": 1,
-            "fields": "name,photo_100",
-            "access_token": apiKey,
-            "v": 5.103
+
+    func loadUserGroups() {
+        let parameters : Parameters = [
+            "user_id" : id,
+            "access_token" : apiKey,
+            "extended" : "1",
+            "v" : "5.110"
         ]
-        let url = baseUrl + path
-        
-        AF.request(url, method: .get, parameters: parameters).responseData { response in
-            guard let data = response.value else { return }
-            print(response)
-            let response = try? JSONDecoder().decode(CommunityResponseContainer.self, from: data)
-            let groups = response?.response.items ?? []
-            self.dataService.save(groups)
-            self.userDefaults.set(Date().timeIntervalSince1970, forKey: GroupList.className())
-            
-            completion(groups)
+        AF.request("https://api.vk.com/method/groups.get", parameters: parameters).responseJSON { (responce) in
+            let json = JSON(responce.value!)
+            let groupList = json["response"]["items"]
+
+            for groups in groupList{
+                let group = GroupListRealm()
+                group.groupId = groups.1["id"].intValue
+                group.groupName = groups.1["name"].stringValue
+                group.groupAvatar = groups.1["photo_50"].stringValue
+                
+                do{
+                    try realm.write {
+                        realm.add(group, update: .all)
+                    }
+                }catch{
+                    print(error.localizedDescription)
+                }
+            }
         }
     }
     
-    func loadAllGroups(q: String, completion: @escaping ([GroupList]) -> Void) {
-        let path = "/method/groups.search?"
-        let parameters: Parameters = [
-            "q": q,
-            "access_token": apiKey,
-            "fields": "name,photo_100",
-            "v": 5.103
+    func loadGlobalGroups(searchText: String, completion: @escaping ([GroupList]) -> ()) {
+        let parameters : Parameters = [
+            "user_id" : id,
+            "access_token" : apiKey,
+            "q" : "\(searchText)",
+            "v" : "5.110"
         ]
-        let url = baseUrl + path
-        
-        AF.request(url, method: .get, parameters: parameters).responseData { response in
-            guard let data = response.value else { return }
-            print(response)
-            let response = try? JSONDecoder().decode(CommunityResponseContainer.self, from: data)
-            let groups = response?.response.items ?? []
-            self.dataService.save(groups)
-            self.userDefaults.set(Date().timeIntervalSince1970, forKey: GroupList.className())
-            
-            completion(groups)
+        AF.request("https://api.vk.com/method/groups.search", parameters: parameters).responseJSON { (responce) in
+            let json = JSON(responce.value!)
+            let searchGroups = json["response"]["items"].map{
+                GroupList(json: $0.1)
+            }
+            completion(searchGroups)
         }
     }
-}

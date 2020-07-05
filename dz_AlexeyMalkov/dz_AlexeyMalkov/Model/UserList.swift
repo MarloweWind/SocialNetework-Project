@@ -8,29 +8,19 @@
 
 import UIKit
 import RealmSwift
+import SwiftyJSON
 //struct UserList{
 //    var name: String
 //    var avatar: UIImage
 //    var userImage: [UIImage?]
 //}
-class UserList: Object, Decodable {
-    dynamic var firstName = ""
-    dynamic var lastName = ""
-    dynamic var avatar = ""
-    dynamic var id = 0
+class UserListRealm: Object {
+    @objc dynamic var id: Int = 0
+    @objc dynamic var firstName: String = ""
+    @objc dynamic var lastName: String = ""
+    @objc dynamic var avatar: String = ""
     
-    
-    enum CodingKeys: String, CodingKey {
-        case firstName = "first_name"
-        case lastName = "last_name"
-        case avatar = "photo_100"
-        case id
+    override class func primaryKey() -> String? {
+        return "id"
     }
-}
-
-class FriendResponse: Decodable {
-    let items: [UserList]
-}
-class FriendResponseContainer: Decodable {
-    let response: FriendResponse
 }
