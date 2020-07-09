@@ -25,7 +25,7 @@ class friendsTableViewCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
-    func setUser(object: UserListRealm){
+    func setUser(object: Friend){
         let url = URL(string: object.avatar)
         self.nameLabel.text = object.firstName + " " + object.lastName
 //        self.lastName.text = object.userLastName

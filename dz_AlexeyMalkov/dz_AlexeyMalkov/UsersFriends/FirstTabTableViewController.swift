@@ -9,8 +9,13 @@
 import UIKit
 import Kingfisher
 import RealmSwift
+import FirebaseFirestore
 
 class FirstTabTableViewController: UITableViewController, UISearchBarDelegate {
+    
+    let db = Firestore.firestore()
+    var ref: DocumentReference? = nil
+    var fbUser: [Friend] = []
     
     @IBOutlet weak var searchBar: UISearchBar!
     
@@ -24,18 +29,43 @@ class FirstTabTableViewController: UITableViewController, UISearchBarDelegate {
         searchBar.delegate = self
         loadFriends()
         self.tableView.reloadData()
+        notification()
         
-        self.token = sortedUsers.observe({ (changes: RealmCollectionChange) in
-            switch changes{
-            case .initial(let result):
-                print(result)
-            case.update(_, deletions: _, insertions: _, modifications: _):
-                self.tableView.reloadData()
-            case.error(let error):
+        db.collection("testFriend").getDocuments { (snapshot, error) in
+            if let error = error{
                 print(error.localizedDescription)
-                       }
-        })
+            } else {
+                for document in snapshot!.documents{
+                    let data = document.data()
+                    self.fbUser.append(Friend(id: data["id"] as! Int, firstName: data["firstName"] as! String, lastName: data["lastName"] as! String, avatar: data["avatar"] as! String))
+                    self.tableView.reloadData()
+                }
+            }
+        }
+        
     }
+    
+        func notification(){
+            token = sortedUsers.observe({ (changes: RealmCollectionChange) in
+                switch changes{
+                case .initial(let result):
+                    print(result)
+                case.update(_, deletions: _, insertions: _, modifications: _):
+                    
+    //                self.ref = self.db.collection("testFriend").addDocument(data: [
+    //                    "groupId": self.sortedGroup[0].groupId,
+    //                    "groupName": self.sortedGroup[0].groupName,
+    //                    "groupAvatar": self.sortedGroup[0].groupAvatar
+    //                    ], completion: { (error) in
+    //                        print(error)
+    //                })
+                    
+                    self.tableView.reloadData()
+                case.error(let error):
+                    print(error.localizedDescription)
+                           }
+            })
+        }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         guard !searchText.isEmpty else{
@@ -68,7 +98,7 @@ class FirstTabTableViewController: UITableViewController, UISearchBarDelegate {
 //    }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return sortedUsers.count
+        return fbUser.count
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -107,9 +137,15 @@ class FirstTabTableViewController: UITableViewController, UISearchBarDelegate {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "userInfoCell", for: indexPath) as! friendsTableViewCell
-        let object = sortedUsers[indexPath.row]
+        let object = fbUser[indexPath.row]
         cell.setUser(object: object)
         
         return cell
     }
+}
+struct Friend {
+    var id: Int = 0
+    var firstName: String = ""
+    var lastName: String = ""
+    var avatar: String = ""
 }
