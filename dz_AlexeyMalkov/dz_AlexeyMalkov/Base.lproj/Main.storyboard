@@ -37,41 +37,41 @@
                     <navigationItem key="navigationItem" id="fEL-go-sct"/>
                     <connections>
                         <outlet property="webView" destination="6yF-60-iPx" id="GQd-mt-yPR"/>
-                        <segue destination="LxO-N8-tUa" kind="presentation" identifier="VKLogin" id="cHk-tQ-wwO"/>
+                        <segue destination="BYZ-38-t0r" kind="presentation" identifier="VKLogin" id="WlW-Kz-deJ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7TY-Hu-3CE" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1048" y="-565"/>
+            <point key="canvasLocation" x="332" y="94"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="dz_AlexeyMalkov" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Авторизация" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pZT-Lw-SNs">
-                                <rect key="frame" x="114" y="76" width="186" height="75"/>
+                                <rect key="frame" x="114" y="32" width="186" height="75"/>
                                 <fontDescription key="fontDescription" name="NotoNastaliqUrdu" family="Noto Nastaliq Urdu" pointSize="30"/>
                                 <color key="textColor" red="0.2627450980392157" green="0.84705882352941175" blue="0.78823529411764703" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qhc-ZE-B6X" userLabel="logPassContainer">
-                                <rect key="frame" x="127" y="371" width="160" height="154"/>
+                                <rect key="frame" x="127" y="327" width="160" height="188"/>
                                 <subviews>
-                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Пароль" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="LJX-DK-tJT">
+                                    <textField opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Пароль" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="LJX-DK-tJT">
                                         <rect key="frame" x="0.0" y="59" width="160" height="34"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
-                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Логин" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="HRC-gJ-xxO">
+                                    <textField opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Логин" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="HRC-gJ-xxO">
                                         <rect key="frame" x="0.0" y="0.0" width="160" height="34"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AYM-PJ-OwO">
+                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AYM-PJ-OwO">
                                         <rect key="frame" x="0.0" y="118" width="160" height="36"/>
                                         <color key="backgroundColor" red="0.58431372549019611" green="0.2196078431372549" blue="0.61960784313725492" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="20"/>
@@ -99,7 +99,7 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3YA-3v-cjX" customClass="LoadinAnimation" customModule="dz_AlexeyMalkov" customModuleProvider="target">
-                                <rect key="frame" x="182" y="181" width="50" height="15"/>
+                                <rect key="frame" x="182" y="137" width="50" height="15"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="15" id="fbC-1e-Sss"/>
@@ -553,23 +553,6 @@
             </objects>
             <point key="canvasLocation" x="4978" y="-565"/>
         </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="3qK-Lj-jZg">
-            <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" navigationBarHidden="YES" id="HTB-b7-O3a" sceneMemberID="viewController">
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="DBi-Fz-MGV">
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="RKH-JX-oZd"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="p5U-Tp-oqQ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="137.68115942028987" y="93.75"/>
-        </scene>
         <!--Группы-->
         <scene sceneID="KEm-Ao-ZiM">
             <objects>
@@ -717,12 +700,11 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Sqt-cm-Dd3" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="138" y="-565"/>
+            <point key="canvasLocation" x="-403" y="94"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="R0x-5p-zD7"/>
-        <segue reference="cHk-tQ-wwO"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="doc.plaintext" catalog="system" width="115" height="128"/>

@@ -9,6 +9,8 @@ target 'dz_AlexeyMalkov' do
   pod 'Kingfisher'
   pod 'RealmSwift'
   pod 'SwiftyJSON'
+  pod 'Firebase/Auth'
+  pod 'Firebase/Firestore'
   # Pods for dz_AlexeyMalkov
 
 end

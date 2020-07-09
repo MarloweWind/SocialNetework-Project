@@ -9,8 +9,13 @@
 import UIKit
 import Kingfisher
 import RealmSwift
+import FirebaseFirestore
 
 class SecondTabTableViewController: UITableViewController, UISearchBarDelegate {
+    
+    let db = Firestore.firestore()
+    var ref: DocumentReference? = nil
+    var fbGroup: [Group] = []
 
     @IBOutlet weak var searchBar: UISearchBar!
     
@@ -24,12 +29,37 @@ class SecondTabTableViewController: UITableViewController, UISearchBarDelegate {
         searchBar.delegate = self
         loadUserGroups()
         self.tableView.reloadData()
+        notification()
         
-        self.token = sortedGroup.observe({ (changes: RealmCollectionChange) in
+        db.collection("testGroup").getDocuments { (snapshot, error) in
+            if let error = error{
+                print(error.localizedDescription)
+            } else {
+                for document in snapshot!.documents{
+                    let data = document.data()
+                    self.fbGroup.append(Group(groupId: data["groupId"] as! Int, groupName: data["groupName"] as! String, groupAvatar: data["groupAvatar"] as! String))
+                    self.tableView.reloadData()
+                }
+            }
+        }
+        
+    }
+    
+    func notification(){
+        token = sortedGroup.observe({ (changes: RealmCollectionChange) in
             switch changes{
             case .initial(let result):
                 print(result)
             case.update(_, deletions: _, insertions: _, modifications: _):
+                
+//                self.ref = self.db.collection("testGroup").addDocument(data: [
+//                    "groupId": self.sortedGroup[0].groupId,
+//                    "groupName": self.sortedGroup[0].groupName,
+//                    "groupAvatar": self.sortedGroup[0].groupAvatar
+//                    ], completion: { (error) in
+//                        print(error)
+//                })
+                
                 self.tableView.reloadData()
             case.error(let error):
                 print(error.localizedDescription)
@@ -71,12 +101,12 @@ class SecondTabTableViewController: UITableViewController, UISearchBarDelegate {
 //    }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return sortedGroup.count
+        return fbGroup.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "usersGropus", for: indexPath) as! UsersGroupsTableViewCell
-        let object = sortedGroup[indexPath.row]
+        let object = fbGroup[indexPath.row]
         cell.setGroup(object: object)
         
         return cell
@@ -89,3 +119,8 @@ class SecondTabTableViewController: UITableViewController, UISearchBarDelegate {
 //        tableView.reloadData()
 //    }
 //}
+struct Group {
+    var groupId: Int = 0
+    var groupName: String = ""
+    var groupAvatar: String = ""
+}
