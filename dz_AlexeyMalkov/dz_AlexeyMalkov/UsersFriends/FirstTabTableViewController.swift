@@ -105,7 +105,7 @@ class FirstTabTableViewController: UITableViewController, UISearchBarDelegate {
         if segue.identifier == "showProfile",
             let destinationVC = segue.destination as? UsersProfile,
             let indexPath = tableView.indexPathForSelectedRow{
-            let user = sortedUsers[indexPath.row]
+            let user = fbUser[indexPath.row]
             let usersNameTitle = user.lastName + user.firstName
             let url = URL(string: user.avatar)
             let usersName = user.lastName + " " + user.firstName
