@@ -15,15 +15,18 @@ class UsersProfile: UIViewController, UICollectionViewDataSource, UICollectionVi
     var namedUser: String?
     var id: Int = 0
     var photos = [Photo]()
+    var usersBdate: String?
 
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var avatarImage: FriendAvatarImageView!
-
+    @IBOutlet weak var bdateLabel: UILabel!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         collectionView.delegate = self
         nameLabel.text = namedUser
+        bdateLabel.text = usersBdate
         avatarImage.kf.setImage(with: iamgeURL)
         loadPhotos(user_id: "\(id)") { photo in
             self.photos = photo
