@@ -224,7 +224,7 @@
                     </tableView>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" id="P1s-GT-QUo">
-                        <barButtonItem key="leftBarButtonItem" id="LQD-a6-5MM">
+                        <barButtonItem key="leftBarButtonItem" image="plus" catalog="system" id="LQD-a6-5MM">
                             <connections>
                                 <segue destination="bCS-Li-V6v" kind="show" identifier="addGroup" id="R0x-5p-zD7"/>
                             </connections>
@@ -726,5 +726,6 @@
         <image name="doc.plaintext" catalog="system" width="115" height="128"/>
         <image name="person.3.fill" catalog="system" width="128" height="61"/>
         <image name="person.fill" catalog="system" width="128" height="120"/>
+        <image name="plus" catalog="system" width="128" height="113"/>
     </resources>
 </document>

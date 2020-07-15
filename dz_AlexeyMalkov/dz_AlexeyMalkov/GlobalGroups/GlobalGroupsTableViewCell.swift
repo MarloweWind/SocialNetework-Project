@@ -25,7 +25,7 @@ class GlobalGroupsTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
 
-    func setGroup (object: GroupList){
+    func setGroup (object: Group){
         let url = URL(string: object.groupAvatar)
         self.globalGroupName.text = object.groupName
         self.globalGroupAvatar.kf.setImage(with: url)

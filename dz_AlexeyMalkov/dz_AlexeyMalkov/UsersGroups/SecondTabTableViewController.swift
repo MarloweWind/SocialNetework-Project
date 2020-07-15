@@ -27,9 +27,9 @@ class SecondTabTableViewController: UITableViewController, UISearchBarDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         searchBar.delegate = self
-        loadUserGroups()
+        //loadUserGroups()
         self.tableView.reloadData()
-        notification()
+        //notification()
         
         db.collection("testGroup").getDocuments { (snapshot, error) in
             if let error = error{
@@ -51,15 +51,6 @@ class SecondTabTableViewController: UITableViewController, UISearchBarDelegate {
             case .initial(let result):
                 print(result)
             case.update(_, deletions: _, insertions: _, modifications: _):
-                
-//                self.ref = self.db.collection("testGroup").addDocument(data: [
-//                    "groupId": self.sortedGroup[0].groupId,
-//                    "groupName": self.sortedGroup[0].groupName,
-//                    "groupAvatar": self.sortedGroup[0].groupAvatar
-//                    ], completion: { (error) in
-//                        print(error)
-//                })
-                
                 self.tableView.reloadData()
             case.error(let error):
                 print(error.localizedDescription)
@@ -83,22 +74,18 @@ class SecondTabTableViewController: UITableViewController, UISearchBarDelegate {
         viewDidLoad()
     }
     
-//    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-//        if editingStyle == .delete {
-//            group.remove(at: indexPath.row)
-//            tableView.deleteRows(at: [indexPath], with: .fade)
-//        }
-//    }
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            fbGroup.remove(at: indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: .fade)
+        }
+    }
 
-//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-//        if segue.identifier == "addGroup", let globalGroupsTebleViewController = segue.destination as? GlobalGroupsTebleViewController {
-//            globalGroupsTebleViewController.delegate = self
-//        }
-//    }
-    
-//    override func numberOfSections(in tableView: UITableView) -> Int {
-//        return 1
-//    }
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "addGroup", let globalGroupsTebleViewController = segue.destination as? GlobalGroupsTebleViewController {
+            globalGroupsTebleViewController.delegate = self
+        }
+    }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return fbGroup.count
@@ -113,12 +100,12 @@ class SecondTabTableViewController: UITableViewController, UISearchBarDelegate {
     }
 }
 
-//extension SecondTabTableViewController: GlobalGroupsTebleViewControllerDelegate {
-//    func didSelectGroupList(list: GroupList) {
-//        sortedGroup.append(list)
-//        tableView.reloadData()
-//    }
-//}
+extension SecondTabTableViewController: GlobalGroupsTebleViewControllerDelegate {    
+    func didSelectGroupList(list: Group) {
+        fbGroup.append(list)
+        tableView.reloadData()
+    }
+}
 struct Group {
     var groupId: Int = 0
     var groupName: String = ""

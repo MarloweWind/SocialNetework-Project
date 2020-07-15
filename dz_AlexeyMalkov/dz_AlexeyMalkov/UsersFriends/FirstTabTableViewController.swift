@@ -18,8 +18,7 @@ class FirstTabTableViewController: UITableViewController, UISearchBarDelegate {
     var fbUser: [Friend] = []
     
     @IBOutlet weak var searchBar: UISearchBar!
-    
-    var sectionIndexTitles: [String] = []
+
     let user = realm.objects(UserListRealm.self)
     var sortedUsers = realm.objects(UserListRealm.self)
     var token: NotificationToken?
@@ -27,9 +26,9 @@ class FirstTabTableViewController: UITableViewController, UISearchBarDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         searchBar.delegate = self
-        loadFriends()
+        //loadFriends()
         self.tableView.reloadData()
-        notification()
+        //notification()
         
         db.collection("testFriend").getDocuments { (snapshot, error) in
             if let error = error{
@@ -51,15 +50,6 @@ class FirstTabTableViewController: UITableViewController, UISearchBarDelegate {
                 case .initial(let result):
                     print(result)
                 case.update(_, deletions: _, insertions: _, modifications: _):
-                    
-    //                self.ref = self.db.collection("testFriend").addDocument(data: [
-    //                    "groupId": self.sortedGroup[0].groupId,
-    //                    "groupName": self.sortedGroup[0].groupName,
-    //                    "groupAvatar": self.sortedGroup[0].groupAvatar
-    //                    ], completion: { (error) in
-    //                        print(error)
-    //                })
-                    
                     self.tableView.reloadData()
                 case.error(let error):
                     print(error.localizedDescription)
@@ -83,20 +73,6 @@ class FirstTabTableViewController: UITableViewController, UISearchBarDelegate {
         viewDidLoad()
     }
     
-//    override func numberOfSections(in tableView: UITableView) -> Int {
-//        return sortedUsers.count
-//    }
-    
-//    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-//        let firstCharUsers = sortedUsers.keys.sorted()[section]
-//        return String(firstCharUsers)
-//    }
-    
-//    override func sectionIndexTitles(for tableView: UITableView) -> [String]? {
-//        let firstCharUsers = sortedUsers.keys.sorted()
-//        return firstCharUsers.map({ String($0) })
-//    }
-    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return fbUser.count
     }
@@ -106,7 +82,7 @@ class FirstTabTableViewController: UITableViewController, UISearchBarDelegate {
             let destinationVC = segue.destination as? UsersProfile,
             let indexPath = tableView.indexPathForSelectedRow{
             let user = fbUser[indexPath.row]
-            let usersNameTitle = user.lastName + user.firstName
+            let usersNameTitle = user.lastName + " " + user.firstName
             let url = URL(string: user.avatar)
             let usersName = user.lastName + " " + user.firstName
             destinationVC.title = usersNameTitle
