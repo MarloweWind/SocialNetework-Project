@@ -9,11 +9,7 @@
 import UIKit
 import RealmSwift
 import SwiftyJSON
-//struct UserList{
-//    var name: String
-//    var avatar: UIImage
-//    var userImage: [UIImage?]
-//}
+
 class UserListRealm: Object {
     @objc dynamic var id: Int = 0
     @objc dynamic var firstName: String = ""

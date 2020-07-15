@@ -11,10 +11,6 @@ import Foundation
 import RealmSwift
 import SwiftyJSON
 
-//struct GroupList {
-//    var groupName: String
-//    var groupAvatar: UIImage?
-//}
 class GroupListRealm: Object {
     @objc dynamic var groupId: Int = 0
     @objc dynamic var groupName: String = ""

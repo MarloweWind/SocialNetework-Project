@@ -58,76 +58,8 @@ extension VKLoginController{
         UserSession.shared.userId = Int(userID) ?? 0
         UserSession.shared.token = token ?? ""
         print(token ?? "false")
-        
-//        let token = params["access_token"]
-//        print(token!)
-//        self.token = token!
-//        let userID = params["access_userId"] ?? ""
-//        UserSession.instance.userId = Int(userID) ?? 0
-//        print(userID)
-//        loadFriends()
-//        loadGroups()
-//        loadPhotos()
-//        loadAllGroups()
+
         performSegue(withIdentifier: "VKLogin", sender: nil)
         decisionHandler(.cancel)
     }
-//
-//    func loadFriends() {
-//        let baseUrl = "https://api.vk.com"
-//        let path = "/method/friends.get"
-//
-//        let params: Parameters = [
-//            "access_token" : token,
-//            "fields": "bdate",
-//            "v" : "5.103"
-//        ]
-//        AF.request(baseUrl+path, method: .get, parameters: params).responseJSON { response in
-//            guard let value = response.value else {return}
-//            print(value)
-//            }
-//        }
-//
-//    func loadGroups(){
-//        let baseUrl = "https://api.vk.com"
-//        let path = "/method/groups.get"
-//
-//        let params: Parameters = [
-//            "access_token" : token,
-//            "extended" : 1,
-//            "v" : "5.68"
-//        ]
-//        AF.request(baseUrl+path, method: .get, parameters: params).responseJSON { response in
-//            guard let value = response.value else {return}
-//            print(value)
-//        }
-//    }
-//    func loadPhotos(){
-//        let baseUrl = "https://api.vk.com"
-//        let path = "/method/photos.getAll"
-//
-//        let params: Parameters = [
-//            "access_token" : token,
-//            "no_service_albums": 1,
-//            "v" : "5.103"
-//        ]
-//        AF.request(baseUrl+path, method: .get, parameters: params).responseJSON { response in
-//            guard let value = response.value else {return}
-//            print(value)
-//        }
-//    }
-//    func loadAllGroups(){
-//        let baseUrl = "https://api.vk.com"
-//        let path = "/method/groups.search"
-//
-//        let params: Parameters = [
-//            "access_token" : token,
-//            "q" : "q",
-//            "v" : "5.103"
-//        ]
-//        AF.request(baseUrl+path, method: .get, parameters: params).responseJSON { response in
-//            guard let value = response.value else {return}
-//            print(value)
-//        }
-//    }
 }

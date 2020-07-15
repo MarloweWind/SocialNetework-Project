@@ -41,13 +41,6 @@ class GlobalGroupsTebleViewController: UITableViewController, UISearchBarDelegat
         
     }
     
-    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        loadGlobalGroups(searchText: searchText) { group in
-            self.sortedGroup = group
-            self.tableView.reloadData()
-        }
-    }
-    
     weak var delegate: GlobalGroupsTebleViewControllerDelegate?
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

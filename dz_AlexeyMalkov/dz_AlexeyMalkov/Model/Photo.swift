@@ -10,23 +10,6 @@ import UIKit
 import RealmSwift
 import SwiftyJSON
 
-//class Size: Object, Decodable {
-//    @objc dynamic var url = ""
-//    @objc dynamic var width = 0
-//    @objc dynamic var height = 0
-//}
-//
-//class PhotoResponseContainer: Decodable {
-//    let response: PhotoResponse
-//}
-//
-//class PhotoResponse: Decodable {
-//    let items: [Photo]
-//}
-//
-//class Photo: Object, Decodable {
-//    var sizes = List<Size>()
-//}
 struct Photo {
     
     var photo_id: String = ""

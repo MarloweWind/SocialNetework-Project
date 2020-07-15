@@ -58,22 +58,6 @@ class SecondTabTableViewController: UITableViewController, UISearchBarDelegate {
         })
     }
     
-    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        guard !searchText.isEmpty else{
-            sortedGroup = group
-            tableView.reloadData()
-            return
-        }
-        sortedGroup = group.filter(" groupName BEGINSWITH '\(searchBar.text!)'")
-        tableView.reloadData()
-    }
-    
-    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        searchBar.text = ""
-        tableView.reloadData()
-        viewDidLoad()
-    }
-    
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             fbGroup.remove(at: indexPath.row)

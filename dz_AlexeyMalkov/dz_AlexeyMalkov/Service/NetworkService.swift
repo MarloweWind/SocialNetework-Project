@@ -10,16 +10,6 @@ import UIKit
 import Alamofire
 import SwiftyJSON
 import RealmSwift
-
-class NetworkService {
-    
-    static let instance = NetworkService()
-        
-        private init(){}
-        
-        var token: String = ""
-        var userID: Int = 0
-    }
     
     let realm = try! Realm()
     var apiKey = UserSession.shared.token

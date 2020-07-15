@@ -25,7 +25,6 @@ class friendsTableViewCell: UITableViewCell {
     func setUser(object: Friend){
         let url = URL(string: object.avatar)
         self.nameLabel.text = object.firstName + " " + object.lastName
-//        self.lastName.text = object.userLastName
         self.avatarImageView.kf.setImage(with: url)
     }
 }
