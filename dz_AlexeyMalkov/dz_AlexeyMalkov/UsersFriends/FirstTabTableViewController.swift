@@ -36,7 +36,7 @@ class FirstTabTableViewController: UITableViewController, UISearchBarDelegate {
             } else {
                 for document in snapshot!.documents{
                     let data = document.data()
-                    self.fbUser.append(Friend(id: data["id"] as! Int, firstName: data["firstName"] as! String, lastName: data["lastName"] as! String, avatar: data["avatar"] as! String, bdate: data["bdate"] as! String))
+                    self.fbUser.append(Friend(id: data["id"] as! Int, firstName: data["firstName"] as! String, lastName: data["lastName"] as! String, avatar: data["avatar"] as! String, bdate: data["bdate"] as! String, usersPhoto: data["usersPhoto"] as! String))
                     self.tableView.reloadData()
                 }
             }
@@ -70,11 +70,12 @@ class FirstTabTableViewController: UITableViewController, UISearchBarDelegate {
             let url = URL(string: user.avatar)
             let usersName = user.lastName + " " + user.firstName
             let usersBirthDate = user.bdate
+            let secondURL = URL(string: user.usersPhoto)
             destinationVC.title = usersNameTitle
             destinationVC.iamgeURL = url
             destinationVC.namedUser = usersName
             destinationVC.usersBdate = usersBirthDate
-            
+            destinationVC.photos = secondURL
         }
     }
     

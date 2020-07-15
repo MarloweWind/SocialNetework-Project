@@ -30,8 +30,6 @@ class ViewController: UIViewController {
                 self.performSegue(withIdentifier: "fromAutorizationToTubbarSegue", sender: nil)
             }
         }
-        
     }
-    
 }
 

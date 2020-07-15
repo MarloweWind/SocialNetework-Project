@@ -9,41 +9,25 @@
 import UIKit
 import Kingfisher
 
-class UsersProfile: UIViewController, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+class UsersProfile: UIViewController{
     
     var iamgeURL: URL?
     var namedUser: String?
-    var id: Int = 0
-    var photos = [Photo]()
+//    var id: Int = 0
+    var photos: URL?
     var usersBdate: String?
 
-    @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var avatarImage: FriendAvatarImageView!
     @IBOutlet weak var bdateLabel: UILabel!
+    @IBOutlet weak var usersImage: ScaleImage!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        collectionView.delegate = self
         nameLabel.text = namedUser
         bdateLabel.text = usersBdate
         avatarImage.kf.setImage(with: iamgeURL)
-        loadPhotos(user_id: "\(id)") { photo in
-            self.photos = photo
-            self.collectionView.reloadData()
-        }
-
-    }
-
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return photos.count
-    }
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "UsersProfileCell", for: indexPath) as! UsersProfileCell
-            let object = photos[indexPath.row]
-            cell.setImage(object: object)
-        
-            return cell
+        usersImage.kf.setImage(with: photos)
     }
 
 }
