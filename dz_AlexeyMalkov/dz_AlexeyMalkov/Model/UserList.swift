@@ -7,10 +7,16 @@
 //
 
 import UIKit
-import Foundation
+import RealmSwift
+import SwiftyJSON
 
-struct UserList{
-    var name: String
-    var avatar: UIImage
-    var userImage: [UIImage?]
+class UserListRealm: Object {
+    @objc dynamic var id: Int = 0
+    @objc dynamic var firstName: String = ""
+    @objc dynamic var lastName: String = ""
+    @objc dynamic var avatar: String = ""
+    
+    override class func primaryKey() -> String? {
+        return "id"
+    }
 }

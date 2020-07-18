@@ -7,73 +7,75 @@
 //
 
 import UIKit
+import Kingfisher
+import RealmSwift
+import FirebaseFirestore
 
 class FirstTabTableViewController: UITableViewController, UISearchBarDelegate {
     
-    @IBOutlet weak var searchBar: UISearchBar!
+    let db = Firestore.firestore()
+    var ref: DocumentReference? = nil
+    var fbUser: [Friend] = []
     
-    var user: [UserList] = [
-        UserList(name: "Святослав", avatar: UIImage(named: "1")!, userImage: [UIImage(named: "1"), UIImage(named: "21")]),
-        UserList(name: "Лидия", avatar: UIImage(named: "2")!, userImage: [UIImage(named: "2"), UIImage(named: "22")]),
-        UserList(name: "Юрий", avatar: UIImage(named: "3")!, userImage: [UIImage(named: "3"), UIImage(named: "23")]),
-        UserList(name: "Зоя", avatar: UIImage(named: "4")!, userImage: [UIImage(named: "4"), UIImage(named: "24")])
-    ]
-    var userIndex = ["Л", "З", "С", "Ю"]
-    var filtered = [UserList]()
-    var searching = false
+    @IBOutlet weak var searchBar: UISearchBar!
+
+    let user = realm.objects(UserListRealm.self)
+    var sortedUsers = realm.objects(UserListRealm.self)
+    var token: NotificationToken?
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        searchBar.delegate = self
+        //loadFriends()
+        self.tableView.reloadData()
+        //notification()
         
-        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "loginNotification"), object: nil)
-        
-    }
-
-    //серчбар
-    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        filtered = user.filter({$0.name.lowercased().prefix(searchText.count) == searchText.lowercased()})
-        searching = true
-        tableView.reloadData()
-    }
-    
-    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        searching = false
-        searchBar.text = ""
-        tableView.reloadData()
-    }
-    
-    override func numberOfSections(in tableView: UITableView) -> Int {
-        if searching {
-            return filtered.count
-        } else {
-            return userIndex.count
-        }
-    }
-    
-    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        if searching{
-            return nil
-        } else{
-            return userIndex[section]
-        }
-    }
-    
-    override func sectionIndexTitles(for tableView: UITableView) -> [String]? {
-        return userIndex
-    }
-    
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if searching {
-           return filtered.count
-        } else {
-        
-        var userRow = [UserList]()
-        for a in user{
-            if userIndex[section].contains(a.name.first!){
-            userRow.append(a)
+        db.collection("testFriend").getDocuments { (snapshot, error) in
+            if let error = error{
+                print(error.localizedDescription)
+            } else {
+                for document in snapshot!.documents{
+                    let data = document.data()
+                    self.fbUser.append(Friend(id: data["id"] as! Int, firstName: data["firstName"] as! String, lastName: data["lastName"] as! String, avatar: data["avatar"] as! String, bdate: data["bdate"] as! String, usersPhoto: data["usersPhoto"] as! String))
+                    self.tableView.reloadData()
                 }
             }
-            return userRow.count
+        }
+        
+    }
+    
+        func notification(){
+            token = sortedUsers.observe({ (changes: RealmCollectionChange) in
+                switch changes{
+                case .initial(let result):
+                    print(result)
+                case.update(_, deletions: _, insertions: _, modifications: _):
+                    self.tableView.reloadData()
+                case.error(let error):
+                    print(error.localizedDescription)
+                           }
+            })
+        }
+    
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return fbUser.count
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "showProfile",
+            let destinationVC = segue.destination as? UsersProfile,
+            let indexPath = tableView.indexPathForSelectedRow{
+            let user = fbUser[indexPath.row]
+            let usersNameTitle = user.lastName + " " + user.firstName
+            let url = URL(string: user.avatar)
+            let usersName = user.lastName + " " + user.firstName
+            let usersBirthDate = user.bdate
+            let secondURL = URL(string: user.usersPhoto)
+            destinationVC.title = usersNameTitle
+            destinationVC.iamgeURL = url
+            destinationVC.namedUser = usersName
+            destinationVC.usersBdate = usersBirthDate
+            destinationVC.photos = secondURL
         }
     }
     
@@ -93,65 +95,22 @@ class FirstTabTableViewController: UITableViewController, UISearchBarDelegate {
                         cell.avatarImageView.transform = .identity
                         cell.avatarImageView.alpha = 1
                         
-        }, completion: { finished in
-            guard finished else { return }
-            
-            if self.searching {
-                let passedImage = self.filtered[indexPath.row].userImage
-                self.performSegue(withIdentifier: "fromTableToCollection", sender: passedImage)
-            } else {
-                var userRow = [UserList]()
-                
-                for a in self.user {
-                    if self.userIndex[indexPath.section].contains(a.name.first!){
-                        userRow.append(a)
-                    }
-                }
-                
-                let passedImage = userRow[indexPath.row].userImage
-                self.performSegue(withIdentifier: "fromTableToCollection", sender: passedImage)
-            }
         })
-    }
-
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "fromTableToCollection" {
-            if let destinationVC = segue.destination as? UsersPhotoCollectionViewController{
-                    if searching{
-                        if let indexPath = tableView.indexPathForSelectedRow{
-                            destinationVC.userImage = filtered[indexPath.row].userImage
-                        }
-                    } else {
-                    
-                    if let indexPath = tableView.indexPathForSelectedRow{
-                        var userRow = [UserList]()
-                        for a in user{
-                        if userIndex[indexPath.section].contains(a.name.first!){
-                        userRow.append(a)
-                            }
-                        }
-                        destinationVC.userImage = userRow[indexPath.row].userImage
-                        }
-                    }
-            }
-        }
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "userInfoCell", for: indexPath) as! friendsTableViewCell
-        if searching{
-            cell.avatarImageView?.image = filtered[indexPath.row].avatar
-            cell.nameLabel?.text = filtered[indexPath.row].name
-        } else {
-        var userRow = [UserList]()
-        for a in user{
-            if userIndex[indexPath.section].contains(a.name.first!){
-            userRow.append(a)
-                }
-            }
-        cell.avatarImageView.image = userRow[indexPath.row].avatar
-        cell.nameLabel.text = userRow[indexPath.row].name
-        }
+        let object = fbUser[indexPath.row]
+        cell.setUser(object: object)
+        
         return cell
     }
+}
+struct Friend {
+    var id: Int = 0
+    var firstName: String = ""
+    var lastName: String = ""
+    var avatar: String = ""
+    var bdate: String = ""
+    var usersPhoto: String = ""
 }

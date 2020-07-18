@@ -11,10 +11,11 @@ import Foundation
 class UserSession{
     
     static let instance = UserSession()
+    static let shared: UserSession = .init()
     
     private init() {}
     
-    var token: String = ""
-    var userId: Int = 0
+    var token = ""
+    var userId = 0
     
 }

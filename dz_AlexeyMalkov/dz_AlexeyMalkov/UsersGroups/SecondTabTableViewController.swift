@@ -7,34 +7,60 @@
 //
 
 import UIKit
+import Kingfisher
+import RealmSwift
+import FirebaseFirestore
 
 class SecondTabTableViewController: UITableViewController, UISearchBarDelegate {
+    
+    let db = Firestore.firestore()
+    var ref: DocumentReference? = nil
+    var fbGroup: [Group] = []
 
     @IBOutlet weak var searchBar: UISearchBar!
     
-    var group: [GroupList] = [
-    GroupList(groupName: "RST", groupAvatar: UIImage(named: "31")!),
-    GroupList(groupName: "Zel RU", groupAvatar: UIImage(named: "32")!),
-    ]
+    var token: NotificationToken?
     
-    var filtered = [GroupList]()
-    var searching = false
-    //серчбар
-    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        filtered = group.filter({$0.groupName.lowercased().prefix(searchText.count) == searchText.lowercased()})
-        searching = true
-        tableView.reloadData()
+    let group = realm.objects(GroupListRealm.self)
+    var sortedGroup = realm.objects(GroupListRealm.self)
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        searchBar.delegate = self
+        //loadUserGroups()
+        self.tableView.reloadData()
+        //notification()
+        
+        db.collection("testGroup").getDocuments { (snapshot, error) in
+            if let error = error{
+                print(error.localizedDescription)
+            } else {
+                for document in snapshot!.documents{
+                    let data = document.data()
+                    self.fbGroup.append(Group(groupId: data["groupId"] as! Int, groupName: data["groupName"] as! String, groupAvatar: data["groupAvatar"] as! String))
+                    self.tableView.reloadData()
+                }
+            }
+        }
+        
     }
     
-    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        searching = false
-        searchBar.text = ""
-        tableView.reloadData()
+    func notification(){
+        token = sortedGroup.observe({ (changes: RealmCollectionChange) in
+            switch changes{
+            case .initial(let result):
+                print(result)
+            case.update(_, deletions: _, insertions: _, modifications: _):
+                self.tableView.reloadData()
+            case.error(let error):
+                print(error.localizedDescription)
+                       }
+        })
     }
     
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            group.remove(at: indexPath.row)
+            fbGroup.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .fade)
         }
     }
@@ -44,33 +70,28 @@ class SecondTabTableViewController: UITableViewController, UISearchBarDelegate {
             globalGroupsTebleViewController.delegate = self
         }
     }
-    
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if searching {
-            return filtered.count
-        } else {
-            return group.count
-        }
+        return fbGroup.count
     }
-
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "usersGropus", for: indexPath) as! UsersGroupsTableViewCell
-        if searching {
-            cell.groupAvatar.image = filtered[indexPath.row].groupAvatar
-            cell.groupName.text = filtered[indexPath.row].groupName
-        } else {
+        let object = fbGroup[indexPath.row]
+        cell.setGroup(object: object)
         
-            cell.groupAvatar.image = group[indexPath.row].groupAvatar
-            cell.groupName.text = group[indexPath.row].groupName
-        }
         return cell
     }
 }
 
-extension SecondTabTableViewController: GlobalGroupsTebleViewControllerDelegate {
-    func didSelectGroupList(list: GroupList) {
-        group.append(list)
+extension SecondTabTableViewController: GlobalGroupsTebleViewControllerDelegate {    
+    func didSelectGroupList(list: Group) {
+        fbGroup.append(list)
         tableView.reloadData()
     }
+}
+struct Group {
+    var groupId: Int = 0
+    var groupName: String = ""
+    var groupAvatar: String = ""
 }
