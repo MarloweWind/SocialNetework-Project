@@ -37,7 +37,7 @@ class SecondTabTableViewController: UITableViewController, UISearchBarDelegate {
             } else {
                 for document in snapshot!.documents{
                     let data = document.data()
-                    self.fbGroup.append(Group(groupId: data["groupId"] as! Int, groupName: data["groupName"] as! String, groupAvatar: data["groupAvatar"] as! String))
+                    self.fbGroup.append(Group(groupId: data["groupId"] as! Int, groupName: data["groupName"] as! String, groupAvatar: data["groupAvatar"] as! String, groupBanner: data["groupBanner"] as! String))
                     self.tableView.reloadData()
                 }
             }
@@ -69,6 +69,20 @@ class SecondTabTableViewController: UITableViewController, UISearchBarDelegate {
         if segue.identifier == "addGroup", let globalGroupsTebleViewController = segue.destination as? GlobalGroupsTebleViewController {
             globalGroupsTebleViewController.delegate = self
         }
+        if segue.identifier == "showGroupProfile",
+            let destinationVC = segue.destination as? GroupProfile,
+            let indexPath = tableView.indexPathForSelectedRow{
+            let group = fbGroup[indexPath.row]
+            let groupTitle = group.groupName
+            let url = URL(string: group.groupAvatar)
+            let groupName = group.groupName
+            let secondURL = URL(string: group.groupBanner)
+            destinationVC.title = groupTitle
+            destinationVC.groupAva = url
+            destinationVC.namedGroup = groupName
+            destinationVC.groupBan = secondURL
+        }
+
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -94,4 +108,5 @@ struct Group {
     var groupId: Int = 0
     var groupName: String = ""
     var groupAvatar: String = ""
+    var groupBanner: String = ""
 }

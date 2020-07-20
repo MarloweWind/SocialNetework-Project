@@ -33,7 +33,7 @@ class GlobalGroupsTebleViewController: UITableViewController, UISearchBarDelegat
             } else {
                 for document in snapshot!.documents{
                     let data = document.data()
-                    self.fbGroup.append(Group(groupId: data["groupId"] as! Int, groupName: data["groupName"] as! String, groupAvatar: data["groupAvatar"] as! String))
+                    self.fbGroup.append(Group(groupId: data["groupId"] as! Int, groupName: data["groupName"] as! String, groupAvatar: data["groupAvatar"] as! String, groupBanner: data["groupBanner"] as! String))
                     self.tableView.reloadData()
                 }
             }

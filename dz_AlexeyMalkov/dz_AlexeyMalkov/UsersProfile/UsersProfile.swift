@@ -13,7 +13,6 @@ class UsersProfile: UIViewController{
     
     var iamgeURL: URL?
     var namedUser: String?
-//    var id: Int = 0
     var photos: URL?
     var usersBdate: String?
 

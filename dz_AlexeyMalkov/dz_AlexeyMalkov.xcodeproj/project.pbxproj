@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		15060BAC24C5FBA5004067AA /* GroupProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15060BAB24C5FBA5004067AA /* GroupProfile.swift */; };
 		1520851A245DF3D800C8EC4E /* FirstTabTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15208519245DF3D800C8EC4E /* FirstTabTableViewController.swift */; };
 		152ABB11247BC67C0035B9EB /* ThirdTabTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 152ABB10247BC67C0035B9EB /* ThirdTabTableViewController.swift */; };
 		152ABB14247BD5230035B9EB /* FeedTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 152ABB12247BD5230035B9EB /* FeedTableViewCell.swift */; };
@@ -45,6 +46,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		15060BAB24C5FBA5004067AA /* GroupProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupProfile.swift; sourceTree = "<group>"; };
 		15208519245DF3D800C8EC4E /* FirstTabTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstTabTableViewController.swift; sourceTree = "<group>"; };
 		152ABB10247BC67C0035B9EB /* ThirdTabTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThirdTabTableViewController.swift; sourceTree = "<group>"; };
 		152ABB12247BD5230035B9EB /* FeedTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedTableViewCell.swift; sourceTree = "<group>"; };
@@ -99,6 +101,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		15060BAA24C5FB6A004067AA /* GroupProfile */ = {
+			isa = PBXGroup;
+			children = (
+				15060BAB24C5FBA5004067AA /* GroupProfile.swift */,
+			);
+			path = GroupProfile;
+			sourceTree = "<group>";
+		};
 		152ABB0F247BC1690035B9EB /* UsersFeed */ = {
 			isa = PBXGroup;
 			children = (
@@ -217,6 +227,7 @@
 				1564AD50246D86C600262B5B /* UsersPhotos */,
 				1564AD51246D86E900262B5B /* UsersGroups */,
 				1564AD52246D872200262B5B /* GlobalGroups */,
+				15060BAA24C5FB6A004067AA /* GroupProfile */,
 				152ABB0F247BC1690035B9EB /* UsersFeed */,
 				1564AD53246D877A00262B5B /* Model */,
 				1533CCF92487B253006325DF /* Animations */,
@@ -379,6 +390,7 @@
 				1533CCFF2487B363006325DF /* InteractiveManager.swift in Sources */,
 				1520851A245DF3D800C8EC4E /* FirstTabTableViewController.swift in Sources */,
 				15719F7A249F724C00DDAB82 /* NetworkService.swift in Sources */,
+				15060BAC24C5FBA5004067AA /* GroupProfile.swift in Sources */,
 				1533E23024A9DA6D00606C44 /* UsersProfile.swift in Sources */,
 				1564AD48246D71A100262B5B /* SecondTabTableViewController.swift in Sources */,
 				1533CD012487B39E006325DF /* CustomNavigationController.swift in Sources */,
@@ -547,7 +559,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.alexeymalkov.dz-AlexeyMalkov";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -566,7 +578,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.alexeymalkov.dz-AlexeyMalkov";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
