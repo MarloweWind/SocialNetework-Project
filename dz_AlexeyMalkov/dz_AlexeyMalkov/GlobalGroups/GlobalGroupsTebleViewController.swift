@@ -20,6 +20,8 @@ class GlobalGroupsTebleViewController: UITableViewController, UISearchBarDelegat
     let db = Firestore.firestore()
     var ref: DocumentReference? = nil
     var fbGroup: [Group] = []
+    var searchGroup: [Group] = []
+    var searching = false
     
     var sortedGroup = [GroupList]()
     
@@ -38,28 +40,52 @@ class GlobalGroupsTebleViewController: UITableViewController, UISearchBarDelegat
                 }
             }
         }
-        
     }
     
     weak var delegate: GlobalGroupsTebleViewControllerDelegate?
 
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        searchGroup = fbGroup.filter({$0.groupName.lowercased().prefix(searchText.count) == searchText.lowercased()})
+        searching = true
+        tableView.reloadData()
+    }
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        searching = false
+        searchBar.text = ""
+        tableView.reloadData()
+    }
+    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return fbGroup.count
+        if searching{
+            return searchGroup.count
+        } else {
+            return fbGroup.count
+        }
     }
 
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "globalGroups", for: indexPath) as! GlobalGroupsTableViewCell
-        let object = fbGroup[indexPath.row]
-        cell.setGroup(object: object)
+        if searching{
+            let object = searchGroup[indexPath.row]
+            cell.setGroup(object: object)
+        } else {
+            let object = fbGroup[indexPath.row]
+            cell.setGroup(object: object)
+        }
         
         return cell
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        delegate?.didSelectGroupList(list: fbGroup[indexPath.row])
-        self.navigationController?.popToRootViewController(animated: true)
+        if searching {
+            delegate?.didSelectGroupList(list: searchGroup[indexPath.row])
+            self.navigationController?.popToRootViewController(animated: true)
+        } else {
+            delegate?.didSelectGroupList(list: fbGroup[indexPath.row])
+            self.navigationController?.popToRootViewController(animated: true)
+        }
     }
     
 }

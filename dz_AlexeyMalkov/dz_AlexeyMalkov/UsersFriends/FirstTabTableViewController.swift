@@ -16,6 +16,8 @@ class FirstTabTableViewController: UITableViewController, UISearchBarDelegate {
     let db = Firestore.firestore()
     var ref: DocumentReference? = nil
     var fbUser: [Friend] = []
+    var searchUser: [Friend] = []
+    var searching = false
     
     @IBOutlet weak var searchBar: UISearchBar!
 
@@ -44,7 +46,7 @@ class FirstTabTableViewController: UITableViewController, UISearchBarDelegate {
         
     }
     
-        func notification(){
+    func notification(){
             token = sortedUsers.observe({ (changes: RealmCollectionChange) in
                 switch changes{
                 case .initial(let result):
@@ -57,25 +59,59 @@ class FirstTabTableViewController: UITableViewController, UISearchBarDelegate {
             })
         }
     
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        searchUser = fbUser.filter({$0.lastName.lowercased().prefix(searchText.count) == searchText.lowercased()})
+        searching = true
+        tableView.reloadData()
+    }
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        searching = false
+        searchBar.text = ""
+        tableView.reloadData()
+    }
+    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return fbUser.count
+        if searching{
+            return searchUser.count
+        } else {
+            return fbUser.count
+        }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "showProfile",
-            let destinationVC = segue.destination as? UsersProfile,
-            let indexPath = tableView.indexPathForSelectedRow{
-            let user = fbUser[indexPath.row]
-            let usersNameTitle = user.lastName + " " + user.firstName
-            let url = URL(string: user.avatar)
-            let usersName = user.lastName + " " + user.firstName
-            let usersBirthDate = user.bdate
-            let secondURL = URL(string: user.usersPhoto)
-            destinationVC.title = usersNameTitle
-            destinationVC.iamgeURL = url
-            destinationVC.namedUser = usersName
-            destinationVC.usersBdate = usersBirthDate
-            destinationVC.photos = secondURL
+        if searching{
+            if segue.identifier == "showProfile",
+                let destinationVC = segue.destination as? UsersProfile,
+                let indexPath = tableView.indexPathForSelectedRow{
+                let user = searchUser[indexPath.row]
+                let usersNameTitle = user.lastName + " " + user.firstName
+                let url = URL(string: user.avatar)
+                let usersName = user.lastName + " " + user.firstName
+                let usersBirthDate = user.bdate
+                let secondURL = URL(string: user.usersPhoto)
+                destinationVC.title = usersNameTitle
+                destinationVC.iamgeURL = url
+                destinationVC.namedUser = usersName
+                destinationVC.usersBdate = usersBirthDate
+                destinationVC.photos = secondURL
+            }
+        } else {
+            if segue.identifier == "showProfile",
+                let destinationVC = segue.destination as? UsersProfile,
+                let indexPath = tableView.indexPathForSelectedRow{
+                let user = fbUser[indexPath.row]
+                let usersNameTitle = user.lastName + " " + user.firstName
+                let url = URL(string: user.avatar)
+                let usersName = user.lastName + " " + user.firstName
+                let usersBirthDate = user.bdate
+                let secondURL = URL(string: user.usersPhoto)
+                destinationVC.title = usersNameTitle
+                destinationVC.iamgeURL = url
+                destinationVC.namedUser = usersName
+                destinationVC.usersBdate = usersBirthDate
+                destinationVC.photos = secondURL
+            }
         }
     }
     
@@ -100,17 +136,22 @@ class FirstTabTableViewController: UITableViewController, UISearchBarDelegate {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "userInfoCell", for: indexPath) as! friendsTableViewCell
-        let object = fbUser[indexPath.row]
-        cell.setUser(object: object)
+        if searching {
+            let object = searchUser[indexPath.row]
+            cell.setUser(object: object)
+        } else {
+            let object = fbUser[indexPath.row]
+            cell.setUser(object: object)
+        }
         
         return cell
     }
 }
-struct Friend {
-    var id: Int = 0
-    var firstName: String = ""
-    var lastName: String = ""
-    var avatar: String = ""
-    var bdate: String = ""
-    var usersPhoto: String = ""
-}
+//struct Friend {
+//    var id: Int = 0
+//    var firstName: String = ""
+//    var lastName: String = ""
+//    var avatar: String = ""
+//    var bdate: String = ""
+//    var usersPhoto: String = ""
+//}
