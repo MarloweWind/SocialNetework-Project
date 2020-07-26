@@ -32,7 +32,11 @@ class SecondTabTableViewController: UITableViewController, UISearchBarDelegate {
         //loadUserGroups()
         self.tableView.reloadData()
         //notification()
+        fbGroupData()
         
+    }
+    
+    func fbGroupData(){
         db.collection("testGroup").getDocuments { (snapshot, error) in
             if let error = error{
                 print(error.localizedDescription)
@@ -44,7 +48,6 @@ class SecondTabTableViewController: UITableViewController, UISearchBarDelegate {
                 }
             }
         }
-        
     }
     
     func notification(){

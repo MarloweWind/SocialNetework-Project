@@ -19,6 +19,10 @@ class ThirdTabTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        fbFeedData()
+    }
+    
+    func fbFeedData(){
         db.collection("testFeed").getDocuments { (snapshot, error) in
             if let error = error{
                 print(error.localizedDescription)

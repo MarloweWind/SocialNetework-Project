@@ -31,7 +31,11 @@ class FirstTabTableViewController: UITableViewController, UISearchBarDelegate {
         //loadFriends()
         self.tableView.reloadData()
         //notification()
+        fbUserData()
         
+    }
+    
+    func fbUserData(){
         db.collection("testFriend").getDocuments { (snapshot, error) in
             if let error = error{
                 print(error.localizedDescription)
@@ -43,7 +47,7 @@ class FirstTabTableViewController: UITableViewController, UISearchBarDelegate {
                 }
             }
         }
-        
+
     }
     
     func notification(){
@@ -147,11 +151,3 @@ class FirstTabTableViewController: UITableViewController, UISearchBarDelegate {
         return cell
     }
 }
-//struct Friend {
-//    var id: Int = 0
-//    var firstName: String = ""
-//    var lastName: String = ""
-//    var avatar: String = ""
-//    var bdate: String = ""
-//    var usersPhoto: String = ""
-//}

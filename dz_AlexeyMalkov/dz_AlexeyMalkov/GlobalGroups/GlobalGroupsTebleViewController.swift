@@ -28,7 +28,10 @@ class GlobalGroupsTebleViewController: UITableViewController, UISearchBarDelegat
     override func viewDidLoad() {
         super.viewDidLoad()
         searchBar.delegate = self
-        
+        fbGlobalGroupData()
+    }
+    
+    func fbGlobalGroupData(){
         db.collection("testGlobalGroups").getDocuments { (snapshot, error) in
             if let error = error{
                 print(error.localizedDescription)
