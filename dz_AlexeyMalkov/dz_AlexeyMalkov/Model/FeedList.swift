@@ -11,6 +11,11 @@ import Foundation
 
 struct FeedList{
     var headLine: String
-    var imageFeed: UIImage?
+    var imageFeed: String
     var feed: String
+    var usersAvatar: String
+    var usersName: String
+    var commentsCount: String
+    var repostCount: String
+    var viewsCount: String
 }
