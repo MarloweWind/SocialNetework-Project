@@ -33,7 +33,6 @@ class SecondTabTableViewController: UITableViewController, UISearchBarDelegate {
         self.tableView.reloadData()
         //notification()
         fbGroupData()
-        
     }
     
     func fbGroupData(){
@@ -72,6 +71,7 @@ class SecondTabTableViewController: UITableViewController, UISearchBarDelegate {
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         searching = false
         searchBar.text = ""
+        tableView.endEditing(true)
         tableView.reloadData()
     }
     

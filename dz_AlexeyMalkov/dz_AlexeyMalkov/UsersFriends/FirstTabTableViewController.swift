@@ -32,7 +32,6 @@ class FirstTabTableViewController: UITableViewController, UISearchBarDelegate {
         self.tableView.reloadData()
         //notification()
         fbUserData()
-        
     }
     
     func fbUserData(){
@@ -72,6 +71,7 @@ class FirstTabTableViewController: UITableViewController, UISearchBarDelegate {
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         searching = false
         searchBar.text = ""
+        tableView.endEditing(true)
         tableView.reloadData()
     }
     

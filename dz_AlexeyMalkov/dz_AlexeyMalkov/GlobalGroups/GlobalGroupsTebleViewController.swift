@@ -56,6 +56,7 @@ class GlobalGroupsTebleViewController: UITableViewController, UISearchBarDelegat
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         searching = false
         searchBar.text = ""
+        tableView.endEditing(true)
         tableView.reloadData()
     }
     
