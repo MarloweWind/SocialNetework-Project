@@ -9,33 +9,39 @@
 import UIKit
 import Kingfisher
 import RealmSwift
-import FirebaseFirestore
 
 class ThirdTabTableViewController: UITableViewController {
 
-    let db = Firestore.firestore()
-    var ref: DocumentReference? = nil
+    var castomRefreshControl = UIRefreshControl()
+    private let queue: DispatchQueue = DispatchQueue(label: "feedQueue", qos: .userInteractive, attributes: [.concurrent])
     var feed: [FeedList] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        fbFeedData()
-    }
-    
-    func fbFeedData(){
-        db.collection("testFeed").getDocuments { (snapshot, error) in
-            if let error = error{
-                print(error.localizedDescription)
-            } else {
-                for document in snapshot!.documents{
-                    let data = document.data()
-                    self.feed.append(FeedList(headLine: data["headLine"] as! String, imageFeed: data["imageFeed"] as! String, feed: data["feed"] as! String, usersAvatar: data["usersAvatar"] as! String, usersName: data["usersName"] as! String, commentsCount: data["commentsCount"] as! String, repostCount: data["repostCount"] as! String, viewsCount: data["viewsCount"] as! String))
+        DispatchQueue.global().async {
+            loadFeed() { news in
+                self.feed = news
+                DispatchQueue.main.async {
                     self.tableView.reloadData()
                 }
             }
         }
+        addRefreshTable()
     }
 
+    func addRefreshControl() {
+         castomRefreshControl.attributedTitle = NSAttributedString(string: "Обновление...")
+         castomRefreshControl.addTarget(self, action: #selector(addRefreshTable), for: .valueChanged)
+         tableView.addSubview(castomRefreshControl)
+     }
+    
+     @objc func addRefreshTable() {
+         
+         DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+             self.castomRefreshControl.endRefreshing()
+         }
+     }
+    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return feed.count
     }
@@ -44,6 +50,7 @@ class ThirdTabTableViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "feedCell", for: indexPath) as! FeedTableViewCell
         let object = feed[indexPath.row]
         cell.setFeed(object: object)
+        
         
         return cell
     }

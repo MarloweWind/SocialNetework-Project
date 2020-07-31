@@ -20,3 +20,8 @@ struct Photo {
         self.photo_1280 = json["photo_1280"].stringValue
     }
 }
+class Photos: Object {
+    @objc dynamic var id: Int = 0
+    @objc dynamic var ownerID: Int = 0
+    @objc dynamic var imageURL: String = ""
+}

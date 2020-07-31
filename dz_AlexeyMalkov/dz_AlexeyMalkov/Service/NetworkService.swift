@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Foundation
 import Alamofire
 import SwiftyJSON
 import RealmSwift
@@ -103,3 +104,20 @@ import RealmSwift
             completion(searchGroups)
         }
     }
+
+    func loadFeed(completion: @escaping ([FeedList]) -> ()){
+            let parameters: Parameters = [
+                "user_id" : id,
+                "access_token" : apiKey,
+                "filters" : "post",
+                "v" : "5.60",
+            ]
+        AF.request("https://api.vk.com/method/newsfeed.get", parameters: parameters).responseJSON { (responce) in
+            let json = JSON(responce.value!)
+            let feed = json["response"]["items"].map{
+                FeedList.init(json: $0.1)
+            }
+            completion(feed)
+        }
+    }
+
