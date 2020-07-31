@@ -16,19 +16,6 @@ class ThirdTabTableViewController: UITableViewController {
     private let queue: DispatchQueue = DispatchQueue(label: "feedQueue", qos: .userInteractive, attributes: [.concurrent])
     var feed: [FeedList] = []
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        DispatchQueue.global().async {
-            loadFeed() { news in
-                self.feed = news
-                DispatchQueue.main.async {
-                    self.tableView.reloadData()
-                }
-            }
-        }
-        addRefreshTable()
-    }
-
     func addRefreshControl() {
          castomRefreshControl.attributedTitle = NSAttributedString(string: "Обновление...")
          castomRefreshControl.addTarget(self, action: #selector(addRefreshTable), for: .valueChanged)
@@ -42,6 +29,19 @@ class ThirdTabTableViewController: UITableViewController {
          }
      }
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        DispatchQueue.global().async {
+            loadFeed() { news in
+                self.feed = news
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
+                }
+            }
+        }
+        addRefreshTable()
+    }
+
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return feed.count
     }

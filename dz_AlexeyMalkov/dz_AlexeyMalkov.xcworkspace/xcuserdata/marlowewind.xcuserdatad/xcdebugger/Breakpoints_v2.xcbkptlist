@@ -30,8 +30,8 @@
             filePath = "dz_AlexeyMalkov/Service/NetworkService.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "120"
-            endingLineNumber = "120"
+            startingLineNumber = "150"
+            endingLineNumber = "150"
             landmarkName = "loadFeed(completion:)"
             landmarkType = "9">
          </BreakpointContent>

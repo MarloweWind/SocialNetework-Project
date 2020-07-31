@@ -105,6 +105,36 @@ import RealmSwift
         }
     }
 
+func loadSourceFeed(){
+    let parameters: Parameters = [
+        "user_id" : id,
+        "access_token" : apiKey,
+        "filters" : "post",
+        "v" : "5.60",
+    ]
+    AF.request("https://api.vk.com/method/newsfeed.get", parameters: parameters).responseJSON { (responce) in
+        let json = JSON(responce.value!)
+        let feedList = json["response"]["items"]
+        for news in feedList{
+        let feed = FeedListVK()
+            feed.postId = news.1["source_id"].intValue
+            feed.text = news.1["text"].stringValue
+            feed.views = news.1["views"]["count"].intValue
+            feed.likes = news.1["likes"]["count"].intValue
+            feed.comments = news.1["comments"]["count"].intValue
+            feed.reposts = news.1["reposts"]["count"].intValue
+            
+            do{
+                try realm.write {
+                    realm.add(feed, update: .all)
+                }
+            }catch{
+                print(error.localizedDescription)
+            }
+        }
+    }
+}
+
     func loadFeed(completion: @escaping ([FeedList]) -> ()){
             let parameters: Parameters = [
                 "user_id" : id,
