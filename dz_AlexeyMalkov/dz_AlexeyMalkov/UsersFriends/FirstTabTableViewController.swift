@@ -18,6 +18,7 @@ class FirstTabTableViewController: UITableViewController, UISearchBarDelegate {
     var fbUser: [Friend] = []
     var searchUser: [Friend] = []
     var searching = false
+    let myQueue = OperationQueue()
     
     @IBOutlet weak var searchBar: UISearchBar!
 
@@ -29,24 +30,30 @@ class FirstTabTableViewController: UITableViewController, UISearchBarDelegate {
         super.viewDidLoad()
         searchBar.delegate = self
         //loadFriends()
-        self.tableView.reloadData()
         //notification()
         fbUserData()
     }
     
     func fbUserData(){
-        db.collection("testFriend").getDocuments { (snapshot, error) in
-            if let error = error{
-                print(error.localizedDescription)
-            } else {
-                for document in snapshot!.documents{
-                    let data = document.data()
-                    self.fbUser.append(Friend(id: data["id"] as! Int, firstName: data["firstName"] as! String, lastName: data["lastName"] as! String, avatar: data["avatar"] as! String, bdate: data["bdate"] as! String, usersPhoto: data["usersPhoto"] as! String))
-                    self.tableView.reloadData()
+        myQueue.addOperation { [weak self] in
+            self?.db.collection("testFriend").getDocuments { (snapshot, error) in
+                if let error = error{
+                    print(error.localizedDescription)
+                } else {
+                    var counter = 0
+                    for document in snapshot!.documents{
+                        let data = document.data()
+                        self?.fbUser.append(Friend(id: data["id"] as! Int, firstName: data["firstName"] as! String, lastName: data["lastName"] as! String, avatar: data["avatar"] as! String, bdate: data["bdate"] as! String, usersPhoto: data["usersPhoto"] as! String))
+                        counter += 1
+                        if counter == snapshot?.documents.count{
+                            OperationQueue.main.addOperation { [weak self] in
+                                self?.tableView.reloadData()
+                            }
+                        }
+                    }
                 }
             }
         }
-
     }
     
     func notification(){

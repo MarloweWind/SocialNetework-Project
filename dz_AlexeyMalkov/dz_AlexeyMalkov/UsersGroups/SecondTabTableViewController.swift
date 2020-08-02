@@ -18,6 +18,7 @@ class SecondTabTableViewController: UITableViewController, UISearchBarDelegate {
     var fbGroup: [Group] = []
     var searchGroup: [Group] = []
     var searching = false
+    let myQueue = OperationQueue()
 
     @IBOutlet weak var searchBar: UISearchBar!
     
@@ -30,25 +31,32 @@ class SecondTabTableViewController: UITableViewController, UISearchBarDelegate {
         super.viewDidLoad()
         searchBar.delegate = self
         //loadUserGroups()
-        self.tableView.reloadData()
         //notification()
         fbGroupData()
     }
     
     func fbGroupData(){
-        db.collection("testGroup").getDocuments { (snapshot, error) in
-            if let error = error{
-                print(error.localizedDescription)
-            } else {
-                for document in snapshot!.documents{
-                    let data = document.data()
-                    self.fbGroup.append(Group(groupId: data["groupId"] as! Int, groupName: data["groupName"] as! String, groupAvatar: data["groupAvatar"] as! String, groupBanner: data["groupBanner"] as! String))
-                    self.tableView.reloadData()
+        myQueue.addOperation { [weak self] in
+            self?.db.collection("testGroup").getDocuments { (snapshot, error) in
+                if let error = error{
+                    print(error.localizedDescription)
+                } else {
+                    var counter = 0
+                    for document in snapshot!.documents{
+                        let data = document.data()
+                        self?.fbGroup.append(Group(groupId: data["groupId"] as! Int, groupName: data["groupName"] as! String, groupAvatar: data["groupAvatar"] as! String, groupBanner: data["groupBanner"] as! String))
+                        counter += 1
+                        if counter == snapshot?.documents.count{
+                            OperationQueue.main.addOperation { [weak self] in
+                                self?.tableView.reloadData()
+                            }
+                        }
+                    }
                 }
             }
         }
     }
-    
+
     func notification(){
         token = sortedGroup.observe({ (changes: RealmCollectionChange) in
             switch changes{
