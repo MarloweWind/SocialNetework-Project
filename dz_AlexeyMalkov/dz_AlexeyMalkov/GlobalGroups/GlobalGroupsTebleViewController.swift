@@ -22,7 +22,7 @@ class GlobalGroupsTebleViewController: UITableViewController, UISearchBarDelegat
     var fbGroup: [Group] = []
     var searchGroup: [Group] = []
     var searching = false
-    
+    let myQueue = OperationQueue()
     var sortedGroup = [GroupList]()
     
     override func viewDidLoad() {
@@ -32,14 +32,22 @@ class GlobalGroupsTebleViewController: UITableViewController, UISearchBarDelegat
     }
     
     func fbGlobalGroupData(){
-        db.collection("testGlobalGroups").getDocuments { (snapshot, error) in
-            if let error = error{
-                print(error.localizedDescription)
-            } else {
-                for document in snapshot!.documents{
-                    let data = document.data()
-                    self.fbGroup.append(Group(groupId: data["groupId"] as! Int, groupName: data["groupName"] as! String, groupAvatar: data["groupAvatar"] as! String, groupBanner: data["groupBanner"] as! String))
-                    self.tableView.reloadData()
+        myQueue.addOperation { [weak self] in
+            self?.db.collection("testGlobalGroups").getDocuments { (snapshot, error) in
+                if let error = error{
+                    print(error.localizedDescription)
+                } else {
+                    var counter = 0
+                    for document in snapshot!.documents{
+                        let data = document.data()
+                        self?.fbGroup.append(Group(groupId: data["groupId"] as! Int, groupName: data["groupName"] as! String, groupAvatar: data["groupAvatar"] as! String, groupBanner: data["groupBanner"] as! String))
+                        counter += 1
+                        if counter == snapshot?.documents.count{
+                            OperationQueue.main.addOperation { [weak self] in
+                                self?.tableView.reloadData()
+                            }
+                        }
+                    }
                 }
             }
         }
