@@ -50,6 +50,8 @@ class ThirdTabTableViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "feedCell", for: indexPath) as! FeedTableViewCell
         let object = feed[indexPath.row]
         cell.setFeed(object: object)
+        let url = URL(string: feed[indexPath.row].feedPhoto.photo)
+        cell.feedImage.kf.setImage(with: url)
         
         
         return cell

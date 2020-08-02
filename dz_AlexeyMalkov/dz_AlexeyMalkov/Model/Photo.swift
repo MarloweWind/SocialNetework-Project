@@ -12,16 +12,18 @@ import SwiftyJSON
 
 struct Photo {
     
-    var photo_id: String = ""
-    var photo_1280: String = ""
+    var photoId: String = ""
+    var photo: String = ""
     
     init(json: JSON) {
-        self.photo_id = json["id"].stringValue
-        self.photo_1280 = json["photo_1280"].stringValue
+        self.photoId = json["id"].stringValue
+        self.photo = json["photo_604"].stringValue
     }
-}
-class Photos: Object {
-    @objc dynamic var id: Int = 0
-    @objc dynamic var ownerID: Int = 0
-    @objc dynamic var imageURL: String = ""
+    
+    init(json: [JSON]) {
+        if !json.isEmpty {
+        self.photoId = json[0]["photo"]["id"].stringValue
+        self.photo = json[0]["photo"]["photo_604"].stringValue
+        }
+    }
 }

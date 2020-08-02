@@ -148,6 +148,8 @@ func loadSourceFeed(){
                 FeedList.init(json: $0.1)
             }
             completion(feed)
+            print(feed)
+            print(json)
         }
     }
 
