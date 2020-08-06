@@ -11,6 +11,7 @@ target 'dz_AlexeyMalkov' do
   pod 'SwiftyJSON'
   pod 'Firebase/Auth'
   pod 'Firebase/Firestore'
+  pod "PromiseKit"
   # Pods for dz_AlexeyMalkov
 
 end

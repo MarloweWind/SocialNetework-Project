@@ -10,6 +10,7 @@ import UIKit
 import Kingfisher
 import RealmSwift
 import FirebaseFirestore
+import PromiseKit
 
 class FirstTabTableViewController: UITableViewController, UISearchBarDelegate {
     
@@ -18,7 +19,6 @@ class FirstTabTableViewController: UITableViewController, UISearchBarDelegate {
     var fbUser: [Friend] = []
     var searchUser: [Friend] = []
     var searching = false
-    let myQueue = OperationQueue()
     
     @IBOutlet weak var searchBar: UISearchBar!
 
@@ -31,29 +31,32 @@ class FirstTabTableViewController: UITableViewController, UISearchBarDelegate {
         searchBar.delegate = self
         //loadFriends()
         //notification()
-        fbUserData()
+        let fbData = fbUserData()
+        fbData.done { returnedFbUser in
+            self.fbUser = returnedFbUser
+            self.tableView.reloadData()
+        }.catch { (error) in
+            print(error.localizedDescription)
+        }
     }
     
-    func fbUserData(){
-        myQueue.addOperation { [weak self] in
-            self?.db.collection("testFriend").getDocuments { (snapshot, error) in
+    func fbUserData() -> Promise<[Friend]> {
+        let promise = Promise<[Friend]> { resolver in
+            db.collection("testFriend").getDocuments { (snapshot, error) in
                 if let error = error{
                     print(error.localizedDescription)
+                    resolver.reject(error)
                 } else {
-                    var counter = 0
+                    var temporalyFbUser: [Friend] = []
                     for document in snapshot!.documents{
                         let data = document.data()
-                        self?.fbUser.append(Friend(id: data["id"] as! Int, firstName: data["firstName"] as! String, lastName: data["lastName"] as! String, avatar: data["avatar"] as! String, bdate: data["bdate"] as! String, usersPhoto: data["usersPhoto"] as! String))
-                        counter += 1
-                        if counter == snapshot?.documents.count{
-                            OperationQueue.main.addOperation { [weak self] in
-                                self?.tableView.reloadData()
-                            }
-                        }
+                        temporalyFbUser.append(Friend(id: data["id"] as! Int, firstName: data["firstName"] as! String, lastName: data["lastName"] as! String, avatar: data["avatar"] as! String, bdate: data["bdate"] as! String, usersPhoto: data["usersPhoto"] as! String))
                     }
+                    resolver.fulfill(temporalyFbUser)
                 }
             }
         }
+        return promise
     }
     
     func notification(){
