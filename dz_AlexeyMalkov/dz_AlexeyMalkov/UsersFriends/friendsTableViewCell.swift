@@ -23,8 +23,8 @@ class friendsTableViewCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
     }
     func setUser(object: Friend){
-        let url = URL(string: object.avatar)
+//        let url = URL(string: object.avatar)
         self.nameLabel.text = object.firstName + " " + object.lastName
-        self.avatarImageView.kf.setImage(with: url)
+//        self.avatarImageView.kf.setImage(with: url)
     }
 }

@@ -19,7 +19,8 @@ class FirstTabTableViewController: UITableViewController, UISearchBarDelegate {
     var fbUser: [Friend] = []
     var searchUser: [Friend] = []
     var searching = false
-    
+    var photoService: PhotoService?
+        
     @IBOutlet weak var searchBar: UISearchBar!
 
     let user = realm.objects(UserListRealm.self)
@@ -38,6 +39,7 @@ class FirstTabTableViewController: UITableViewController, UISearchBarDelegate {
         }.catch { (error) in
             print(error.localizedDescription)
         }
+        photoService = PhotoService(container: tableView)
     }
     
     func fbUserData() -> Promise<[Friend]> {
@@ -47,12 +49,12 @@ class FirstTabTableViewController: UITableViewController, UISearchBarDelegate {
                     print(error.localizedDescription)
                     resolver.reject(error)
                 } else {
-                    var temporalyFbUser: [Friend] = []
+                    var temporaryFbUser: [Friend] = []
                     for document in snapshot!.documents{
                         let data = document.data()
-                        temporalyFbUser.append(Friend(id: data["id"] as! Int, firstName: data["firstName"] as! String, lastName: data["lastName"] as! String, avatar: data["avatar"] as! String, bdate: data["bdate"] as! String, usersPhoto: data["usersPhoto"] as! String))
+                        temporaryFbUser.append(Friend(id: data["id"] as! Int, firstName: data["firstName"] as! String, lastName: data["lastName"] as! String, avatar: data["avatar"] as! String, bdate: data["bdate"] as! String, usersPhoto: data["usersPhoto"] as! String))
                     }
-                    resolver.fulfill(temporalyFbUser)
+                    resolver.fulfill(temporaryFbUser)
                 }
             }
         }
@@ -153,9 +155,13 @@ class FirstTabTableViewController: UITableViewController, UISearchBarDelegate {
         if searching {
             let object = searchUser[indexPath.row]
             cell.setUser(object: object)
+            let fbImage = searchUser[indexPath.row]
+            cell.avatarImageView.image = photoService?.photo(atIndexpath: indexPath, byUrl: fbImage.avatar)
         } else {
             let object = fbUser[indexPath.row]
             cell.setUser(object: object)
+            let fbImage = fbUser[indexPath.row]
+            cell.avatarImageView.image = photoService?.photo(atIndexpath: indexPath, byUrl: fbImage.avatar)
         }
         
         return cell

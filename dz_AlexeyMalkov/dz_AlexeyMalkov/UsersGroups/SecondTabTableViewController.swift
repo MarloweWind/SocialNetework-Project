@@ -19,6 +19,7 @@ class SecondTabTableViewController: UITableViewController, UISearchBarDelegate {
     var searchGroup: [Group] = []
     var searching = false
     let myQueue = OperationQueue()
+    var photoService: PhotoService?
 
     @IBOutlet weak var searchBar: UISearchBar!
     
@@ -55,6 +56,7 @@ class SecondTabTableViewController: UITableViewController, UISearchBarDelegate {
                 }
             }
         }
+        photoService = PhotoService(container: tableView)
     }
 
     func notification(){
@@ -143,9 +145,13 @@ class SecondTabTableViewController: UITableViewController, UISearchBarDelegate {
         if searching{
             let object = searchGroup[indexPath.row]
             cell.setGroup(object: object)
+            let fbImage = searchGroup[indexPath.row]
+            cell.groupAvatar.image = photoService?.photo(atIndexpath: indexPath, byUrl: fbImage.groupAvatar)
         } else {
             let object = fbGroup[indexPath.row]
             cell.setGroup(object: object)
+            let fbImage = fbGroup[indexPath.row]
+            cell.groupAvatar.image = photoService?.photo(atIndexpath: indexPath, byUrl: fbImage.groupAvatar)
         }
         
         return cell
