@@ -12,25 +12,27 @@ import RealmSwift
 
 class ThirdTabTableViewController: UITableViewController {
 
-    var castomRefreshControl = UIRefreshControl()
     private let queue: DispatchQueue = DispatchQueue(label: "feedQueue", qos: .userInteractive, attributes: [.concurrent])
     var feed: [FeedList] = []
     
-    func addRefreshControl() {
-         castomRefreshControl.attributedTitle = NSAttributedString(string: "Обновление...")
-         castomRefreshControl.addTarget(self, action: #selector(addRefreshTable), for: .valueChanged)
-         tableView.addSubview(castomRefreshControl)
-     }
+    func setupRefreshControl(){
+        refreshControl = UIRefreshControl()
+        refreshControl?.addTarget(self, action: #selector(refreshImage), for: .valueChanged)
+    }
     
-     @objc func addRefreshTable() {
-         
-         DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-             self.castomRefreshControl.endRefreshing()
-         }
-     }
+    @objc func refreshImage(){
+        self.feed.removeAll()
+        self.tableView.reloadData()
+        loadFeed() { news in
+            self.feed = news
+                self.refreshControl?.endRefreshing()
+                self.tableView.reloadData()
+            }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        tableView.prefetchDataSource = self
         DispatchQueue.global().async {
             loadFeed() { news in
                 self.feed = news
@@ -39,12 +41,18 @@ class ThirdTabTableViewController: UITableViewController {
                 }
             }
         }
-        addRefreshTable()
+        setupRefreshControl()
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return feed.count
     }
+    
+//    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+//        let tableWidth = tableView.bounds.width
+//        let cellHeight = tableWidth * feed[indexPath.row].feedPhoto.aspectRatio
+//        return cellHeight
+//    }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "feedCell", for: indexPath) as! FeedTableViewCell
@@ -57,4 +65,21 @@ class ThirdTabTableViewController: UITableViewController {
         return cell
     }
 
+}
+
+extension ThirdTabTableViewController: UITableViewDataSourcePrefetching{
+
+    func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
+        if indexPaths.count <= 1{
+            count += 1
+            DispatchQueue.global().async {
+                loadFeed() { news in
+                    self.feed = news
+                    DispatchQueue.main.async {
+                        self.tableView.reloadData()
+                    }
+                }
+            }
+        }
+    }
 }

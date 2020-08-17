@@ -15,6 +15,7 @@ import RealmSwift
     let realm = try! Realm()
     var apiKey = UserSession.shared.token
     var id = UserSession.shared.userId
+    var count = UserSession.shared.count
 
     func loadFriends() {
         let parameters : Parameters = [
@@ -141,6 +142,7 @@ func loadSourceFeed(){
                 "access_token" : apiKey,
                 "filters" : "post",
                 "v" : "5.60",
+                "count" : count + 10
             ]
         AF.request("https://api.vk.com/method/newsfeed.get", parameters: parameters).responseJSON { (responce) in
             let json = JSON(responce.value!)

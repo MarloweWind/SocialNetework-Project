@@ -14,16 +14,24 @@ struct Photo {
     
     var photoId: String = ""
     var photo: String = ""
+    var height: Float = 0
+    var width: Float = 0
+    
+    var aspectRatio: CGFloat { return CGFloat(height)/CGFloat(width) }
     
     init(json: JSON) {
         self.photoId = json["id"].stringValue
         self.photo = json["photo_604"].stringValue
+        self.height = json["height"].floatValue
+        self.width = json["width"].floatValue
     }
     
     init(json: [JSON]) {
         if !json.isEmpty {
         self.photoId = json[0]["photo"]["id"].stringValue
         self.photo = json[0]["photo"]["photo_604"].stringValue
+        self.height = json[0]["photo"]["height"].floatValue
+        self.width = json[0]["photo"]["width"].floatValue
         }
     }
 }
