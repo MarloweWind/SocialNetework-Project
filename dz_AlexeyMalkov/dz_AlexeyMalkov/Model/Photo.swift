@@ -17,7 +17,13 @@ struct Photo {
     var height: Float = 0
     var width: Float = 0
     
-    var aspectRatio: CGFloat { return CGFloat(height)/CGFloat(width) }
+        var aspectRatio: CGFloat {
+        if height == 0 && width == 0 {
+            return 0
+        } else {
+            return CGFloat(height)/CGFloat(width)
+        }
+    }
     
     init(json: JSON) {
         self.photoId = json["id"].stringValue
