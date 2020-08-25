@@ -48,11 +48,11 @@ class ThirdTabTableViewController: UITableViewController {
         return feed.count
     }
     
-//    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-//        let tableWidth = tableView.bounds.width
-//        let cellHeight = tableWidth * feed[indexPath.row].feedPhoto.aspectRatio
-//        return cellHeight
-//    }
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        let tableWidth = tableView.bounds.width
+        let cellHeight = tableWidth * feed[indexPath.row].feedPhoto.aspectRatio
+        return cellHeight
+    }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "feedCell", for: indexPath) as! FeedTableViewCell
