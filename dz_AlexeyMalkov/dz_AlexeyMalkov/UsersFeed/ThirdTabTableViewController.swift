@@ -14,6 +14,7 @@ class ThirdTabTableViewController: UITableViewController {
 
     private let queue: DispatchQueue = DispatchQueue(label: "feedQueue", qos: .userInteractive, attributes: [.concurrent])
     var feed: [FeedList] = []
+    var isLoading: Bool = false
     
     func setupRefreshControl(){
         refreshControl = UIRefreshControl()
@@ -70,14 +71,16 @@ class ThirdTabTableViewController: UITableViewController {
 extension ThirdTabTableViewController: UITableViewDataSourcePrefetching{
 
     func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
-        if indexPaths.count <= 1{
-            count += 1
-            DispatchQueue.global().async {
+        
+        guard let max = indexPaths.map({$0.row}).max() else {return}
+        if max > feed.count - 3 {
+            if !isLoading{
+                isLoading = true
+                count += 1
                 loadFeed() { news in
-                    self.feed = news
-                    DispatchQueue.main.async {
-                        self.tableView.reloadData()
-                    }
+                self.feed = news
+                    self.tableView.reloadData()
+                    self.isLoading = false
                 }
             }
         }
