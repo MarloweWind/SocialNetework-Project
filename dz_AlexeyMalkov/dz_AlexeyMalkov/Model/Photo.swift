@@ -12,11 +12,32 @@ import SwiftyJSON
 
 struct Photo {
     
-    var photo_id: String = ""
-    var photo_1280: String = ""
+    var photoId: String = ""
+    var photo: String = ""
+    var height: Float = 0
+    var width: Float = 0
+    
+        var aspectRatio: CGFloat {
+        if height == 0 && width == 0 {
+            return 0
+        } else {
+            return CGFloat(height)/CGFloat(width)
+        }
+    }
     
     init(json: JSON) {
-        self.photo_id = json["id"].stringValue
-        self.photo_1280 = json["photo_1280"].stringValue
+        self.photoId = json["id"].stringValue
+        self.photo = json["photo_604"].stringValue
+        self.height = json["height"].floatValue
+        self.width = json["width"].floatValue
+    }
+    
+    init(json: [JSON]) {
+        if !json.isEmpty {
+        self.photoId = json[0]["photo"]["id"].stringValue
+        self.photo = json[0]["photo"]["photo_604"].stringValue
+        self.height = json[0]["photo"]["height"].floatValue
+        self.width = json[0]["photo"]["width"].floatValue
+        }
     }
 }

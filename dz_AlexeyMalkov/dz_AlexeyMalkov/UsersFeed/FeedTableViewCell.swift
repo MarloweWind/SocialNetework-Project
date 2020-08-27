@@ -7,12 +7,33 @@
 //
 
 import UIKit
+import Kingfisher
 
 class FeedTableViewCell: UITableViewCell {
 
-    @IBOutlet weak var headLineLabel: UILabel!
     @IBOutlet weak var feedImage: UIImageView!
     @IBOutlet weak var feedLabel: UILabel!
-    @IBOutlet weak var ViewLike: LikeView!
+    @IBOutlet weak var commentsLabel: UILabel!
+    @IBOutlet weak var repostLabel: UILabel!
+    @IBOutlet weak var likeLabel: UILabel!
     
+    override func awakeFromNib() {
+        super.awakeFromNib()
+    }
+    
+    func setFbFeed(object: FeedListFireBase){
+        let firstURL = URL(string: object.imageFeed)
+        self.feedImage.kf.setImage(with: firstURL)
+        self.feedLabel.text = object.feed
+        self.commentsLabel.text = object.commentsCount
+        self.repostLabel.text = object.repostCount
+    }
+    
+    func setFeed(object: FeedList){
+        self.feedLabel.text = object.text
+        self.likeLabel.text = object.likes
+        self.commentsLabel.text = object.comments
+        self.repostLabel.text = object.reposts
+
+    }
 }

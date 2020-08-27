@@ -20,3 +20,12 @@ class UserListRealm: Object {
         return "id"
     }
 }
+
+struct Friend {
+    var id: Int = 0
+    var firstName: String = ""
+    var lastName: String = ""
+    var avatar: String = ""
+    var bdate: String = ""
+    var usersPhoto: String = ""
+}

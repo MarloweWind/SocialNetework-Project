@@ -17,5 +17,6 @@ class UserSession{
     
     var token = ""
     var userId = 0
+    var count = 0
     
 }

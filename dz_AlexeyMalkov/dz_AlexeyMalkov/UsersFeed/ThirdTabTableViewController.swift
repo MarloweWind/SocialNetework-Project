@@ -7,31 +7,82 @@
 //
 
 import UIKit
+import Kingfisher
+import RealmSwift
 
 class ThirdTabTableViewController: UITableViewController {
 
-    var feed: [FeedList] = [
-        FeedList(headLine: "Хорошая погода", imageFeed: UIImage(named: "51"), feed: "Синоптики пообещали хорошую погоду. Теплая погода вернется в выходные — воздух  днем прогреется до +20 градусов. В субботу местами пройдет кратковременный дождь, столбики термометра покажут +20...+25 градусов. В воскресенье осадков не ожидается, температура составит +21...+23 градусов."),
-        FeedList(headLine: "Идет строительство нового стадиона", imageFeed: UIImage(named: "52"), feed: "Объект рассчитан на 60 тыс. зрителей и сочетает в себе элементы традиционной архитектуры с модернистскими формами. Стадион адаптирован к жарким погодным условиям. Конструкция стадиона и сверхсовременная система кондиционирования позволит поддерживать на нем оптимальную температуру."),
-        FeedList(headLine: "Осенью выходят новые модели iPhone 12", imageFeed: UIImage(named: "53"), feed: "В сети опубликованы цены на будущую линейку iPhone 12, которая должна быть представлена в сентябре. По информации инсайдеров, всего в этом году появится четыре новых модели, каждая из которых получит поддержку технологии 5G. Всего будет представлено два варианта iPhone 12 — на 128 ГБ и на 256 ГБ. Их стоимость составит $649 и $749 соответственно."),
-    ]
+    private let queue: DispatchQueue = DispatchQueue(label: "feedQueue", qos: .userInteractive, attributes: [.concurrent])
+    var feed: [FeedList] = []
+    var isLoading: Bool = false
+    
+    func setupRefreshControl(){
+        refreshControl = UIRefreshControl()
+        refreshControl?.addTarget(self, action: #selector(refreshImage), for: .valueChanged)
+    }
+    
+    @objc func refreshImage(){
+        self.feed.removeAll()
+        self.tableView.reloadData()
+        loadFeed() { news in
+            self.feed = news
+                self.refreshControl?.endRefreshing()
+                self.tableView.reloadData()
+            }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        tableView.prefetchDataSource = self
+        DispatchQueue.global().async {
+            loadFeed() { news in
+                self.feed = news
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
+                }
+            }
+        }
+        setupRefreshControl()
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return feed.count
     }
+    
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        let tableWidth = tableView.bounds.width
+        let cellHeight = tableWidth * feed[indexPath.row].feedPhoto.aspectRatio
+        return cellHeight
+    }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "feedCell", for: indexPath) as! FeedTableViewCell
+        let object = feed[indexPath.row]
+        cell.setFeed(object: object)
+        let url = URL(string: feed[indexPath.row].feedPhoto.photo)
+        cell.feedImage.kf.setImage(with: url)
         
-        cell.headLineLabel.text = feed[indexPath.row].headLine
-        cell.feedImage.image = feed[indexPath.row].imageFeed
-        cell.feedLabel.text = feed[indexPath.row].feed
         
         return cell
     }
 
+}
+
+extension ThirdTabTableViewController: UITableViewDataSourcePrefetching{
+
+    func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
+        
+        guard let max = indexPaths.map({$0.row}).max() else {return}
+        if max > feed.count - 3 {
+            if !isLoading{
+                isLoading = true
+                count += 1
+                loadFeed() { news in
+                self.feed = news
+                    self.tableView.reloadData()
+                    self.isLoading = false
+                }
+            }
+        }
+    }
 }

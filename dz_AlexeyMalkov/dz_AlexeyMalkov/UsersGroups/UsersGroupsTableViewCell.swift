@@ -24,8 +24,8 @@ class UsersGroupsTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     func setGroup (object: Group){
-        let url = URL(string: object.groupAvatar)
+//        let url = URL(string: object.groupAvatar)
         self.groupName.text = object.groupName
-        self.groupAvatar.kf.setImage(with: url)
+//        self.groupAvatar.kf.setImage(with: url)
     }
 }

@@ -10,13 +10,17 @@ import UIKit
 import Kingfisher
 import RealmSwift
 import FirebaseFirestore
+import PromiseKit
 
 class FirstTabTableViewController: UITableViewController, UISearchBarDelegate {
     
     let db = Firestore.firestore()
     var ref: DocumentReference? = nil
     var fbUser: [Friend] = []
-    
+    var searchUser: [Friend] = []
+    var searching = false
+    var photoService: PhotoService?
+        
     @IBOutlet weak var searchBar: UISearchBar!
 
     let user = realm.objects(UserListRealm.self)
@@ -27,24 +31,37 @@ class FirstTabTableViewController: UITableViewController, UISearchBarDelegate {
         super.viewDidLoad()
         searchBar.delegate = self
         //loadFriends()
-        self.tableView.reloadData()
         //notification()
-        
-        db.collection("testFriend").getDocuments { (snapshot, error) in
-            if let error = error{
-                print(error.localizedDescription)
-            } else {
-                for document in snapshot!.documents{
-                    let data = document.data()
-                    self.fbUser.append(Friend(id: data["id"] as! Int, firstName: data["firstName"] as! String, lastName: data["lastName"] as! String, avatar: data["avatar"] as! String, bdate: data["bdate"] as! String, usersPhoto: data["usersPhoto"] as! String))
-                    self.tableView.reloadData()
+        let fbData = fbUserData()
+        fbData.done { returnedFbUser in
+            self.fbUser = returnedFbUser
+            self.tableView.reloadData()
+        }.catch { (error) in
+            print(error.localizedDescription)
+        }
+        photoService = PhotoService(container: tableView)
+    }
+    
+    func fbUserData() -> Promise<[Friend]> {
+        let promise = Promise<[Friend]> { resolver in
+            db.collection("testFriend").getDocuments { (snapshot, error) in
+                if let error = error{
+                    print(error.localizedDescription)
+                    resolver.reject(error)
+                } else {
+                    var temporaryFbUser: [Friend] = []
+                    for document in snapshot!.documents{
+                        let data = document.data()
+                        temporaryFbUser.append(Friend(id: data["id"] as! Int, firstName: data["firstName"] as! String, lastName: data["lastName"] as! String, avatar: data["avatar"] as! String, bdate: data["bdate"] as! String, usersPhoto: data["usersPhoto"] as! String))
+                    }
+                    resolver.fulfill(temporaryFbUser)
                 }
             }
         }
-        
+        return promise
     }
     
-        func notification(){
+    func notification(){
             token = sortedUsers.observe({ (changes: RealmCollectionChange) in
                 switch changes{
                 case .initial(let result):
@@ -57,25 +74,60 @@ class FirstTabTableViewController: UITableViewController, UISearchBarDelegate {
             })
         }
     
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        searchUser = fbUser.filter({$0.lastName.lowercased().prefix(searchText.count) == searchText.lowercased()})
+        searching = true
+        tableView.reloadData()
+    }
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        searching = false
+        searchBar.text = ""
+        tableView.endEditing(true)
+        tableView.reloadData()
+    }
+    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return fbUser.count
+        if searching{
+            return searchUser.count
+        } else {
+            return fbUser.count
+        }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "showProfile",
-            let destinationVC = segue.destination as? UsersProfile,
-            let indexPath = tableView.indexPathForSelectedRow{
-            let user = fbUser[indexPath.row]
-            let usersNameTitle = user.lastName + " " + user.firstName
-            let url = URL(string: user.avatar)
-            let usersName = user.lastName + " " + user.firstName
-            let usersBirthDate = user.bdate
-            let secondURL = URL(string: user.usersPhoto)
-            destinationVC.title = usersNameTitle
-            destinationVC.iamgeURL = url
-            destinationVC.namedUser = usersName
-            destinationVC.usersBdate = usersBirthDate
-            destinationVC.photos = secondURL
+        if searching{
+            if segue.identifier == "showProfile",
+                let destinationVC = segue.destination as? UsersProfile,
+                let indexPath = tableView.indexPathForSelectedRow{
+                let user = searchUser[indexPath.row]
+                let usersNameTitle = user.lastName + " " + user.firstName
+                let url = URL(string: user.avatar)
+                let usersName = user.lastName + " " + user.firstName
+                let usersBirthDate = user.bdate
+                let secondURL = URL(string: user.usersPhoto)
+                destinationVC.title = usersNameTitle
+                destinationVC.iamgeURL = url
+                destinationVC.namedUser = usersName
+                destinationVC.usersBdate = usersBirthDate
+                destinationVC.photos = secondURL
+            }
+        } else {
+            if segue.identifier == "showProfile",
+                let destinationVC = segue.destination as? UsersProfile,
+                let indexPath = tableView.indexPathForSelectedRow{
+                let user = fbUser[indexPath.row]
+                let usersNameTitle = user.lastName + " " + user.firstName
+                let url = URL(string: user.avatar)
+                let usersName = user.lastName + " " + user.firstName
+                let usersBirthDate = user.bdate
+                let secondURL = URL(string: user.usersPhoto)
+                destinationVC.title = usersNameTitle
+                destinationVC.iamgeURL = url
+                destinationVC.namedUser = usersName
+                destinationVC.usersBdate = usersBirthDate
+                destinationVC.photos = secondURL
+            }
         }
     }
     
@@ -100,17 +152,18 @@ class FirstTabTableViewController: UITableViewController, UISearchBarDelegate {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "userInfoCell", for: indexPath) as! friendsTableViewCell
-        let object = fbUser[indexPath.row]
-        cell.setUser(object: object)
+        if searching {
+            let object = searchUser[indexPath.row]
+            cell.setUser(object: object)
+            let fbImage = searchUser[indexPath.row]
+            cell.avatarImageView.image = photoService?.photo(atIndexpath: indexPath, byUrl: fbImage.avatar)
+        } else {
+            let object = fbUser[indexPath.row]
+            cell.setUser(object: object)
+            let fbImage = fbUser[indexPath.row]
+            cell.avatarImageView.image = photoService?.photo(atIndexpath: indexPath, byUrl: fbImage.avatar)
+        }
         
         return cell
     }
-}
-struct Friend {
-    var id: Int = 0
-    var firstName: String = ""
-    var lastName: String = ""
-    var avatar: String = ""
-    var bdate: String = ""
-    var usersPhoto: String = ""
 }

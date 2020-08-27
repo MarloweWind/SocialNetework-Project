@@ -30,7 +30,7 @@ class LikeView: UIControl {
         imageView = UIImageView(frame: CGRect(x: 15, y: 0, width: 21, height: 21))
         imageView.image = image
         imageView.contentMode = .scaleAspectFit
-        imageView.tintColor = .blue
+        imageView.tintColor = .systemBlue
         self.addSubview(label)
         self.addSubview(imageView)
     }

@@ -38,3 +38,10 @@ struct GroupList: Equatable {
         self.groupAvatar = json["photo_50"].stringValue
     }
 }
+
+struct Group {
+    var groupId: Int = 0
+    var groupName: String = ""
+    var groupAvatar: String = ""
+    var groupBanner: String = ""
+}

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Foundation
 import Alamofire
 import SwiftyJSON
 import RealmSwift
@@ -14,6 +15,7 @@ import RealmSwift
     let realm = try! Realm()
     var apiKey = UserSession.shared.token
     var id = UserSession.shared.userId
+    var count = UserSession.shared.count
 
     func loadFriends() {
         let parameters : Parameters = [
@@ -103,3 +105,51 @@ import RealmSwift
             completion(searchGroups)
         }
     }
+
+func loadSourceFeed(){
+    let parameters: Parameters = [
+        "user_id" : id,
+        "access_token" : apiKey,
+        "filters" : "post",
+        "v" : "5.60",
+    ]
+    AF.request("https://api.vk.com/method/newsfeed.get", parameters: parameters).responseJSON { (responce) in
+        let json = JSON(responce.value!)
+        let feedList = json["response"]["items"]
+        for news in feedList{
+        let feed = FeedListVK()
+            feed.postId = news.1["source_id"].intValue
+            feed.text = news.1["text"].stringValue
+            feed.views = news.1["views"]["count"].intValue
+            feed.likes = news.1["likes"]["count"].intValue
+            feed.comments = news.1["comments"]["count"].intValue
+            feed.reposts = news.1["reposts"]["count"].intValue
+            
+            do{
+                try realm.write {
+                    realm.add(feed, update: .all)
+                }
+            }catch{
+                print(error.localizedDescription)
+            }
+        }
+    }
+}
+
+    func loadFeed(completion: @escaping ([FeedList]) -> ()){
+            let parameters: Parameters = [
+                "user_id" : id,
+                "access_token" : apiKey,
+                "filters" : "post",
+                "v" : "5.60",
+                "count" : count + 10
+            ]
+        AF.request("https://api.vk.com/method/newsfeed.get", parameters: parameters).responseJSON { (responce) in
+            let json = JSON(responce.value!)
+            let feed = json["response"]["items"].map{
+                FeedList.init(json: $0.1)
+            }
+            completion(feed)
+        }
+    }
+
