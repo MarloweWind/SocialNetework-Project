@@ -15,6 +15,7 @@ class ThirdTabTableViewController: UITableViewController {
     private let queue: DispatchQueue = DispatchQueue(label: "feedQueue", qos: .userInteractive, attributes: [.concurrent])
     var feed: [FeedList] = []
     var isLoading: Bool = false
+    var feedAdapter = FeedAdapter()
     
     func setupRefreshControl(){
         refreshControl = UIRefreshControl()
@@ -24,7 +25,7 @@ class ThirdTabTableViewController: UITableViewController {
     @objc func refreshImage(){
         self.feed.removeAll()
         self.tableView.reloadData()
-        loadFeed() { news in
+        feedAdapter.adapterLoadFeed() { news in
             self.feed = news
                 self.refreshControl?.endRefreshing()
                 self.tableView.reloadData()
@@ -35,7 +36,7 @@ class ThirdTabTableViewController: UITableViewController {
         super.viewDidLoad()
         tableView.prefetchDataSource = self
         DispatchQueue.global().async {
-            loadFeed() { news in
+            self.feedAdapter.adapterLoadFeed() { news in
                 self.feed = news
                 DispatchQueue.main.async {
                     self.tableView.reloadData()

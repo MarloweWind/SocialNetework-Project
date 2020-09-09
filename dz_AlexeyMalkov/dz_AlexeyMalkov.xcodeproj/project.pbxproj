@@ -41,6 +41,9 @@
 		15B7382D245435600007C99C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 15B7382C245435600007C99C /* Assets.xcassets */; };
 		15B73830245435600007C99C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 15B7382E245435600007C99C /* LaunchScreen.storyboard */; };
 		15BBD4D324E00C780089AA58 /* PhotoService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15BBD4D224E00C780089AA58 /* PhotoService.swift */; };
+		15C35ADD25090B8A0029A9D2 /* UIColor+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15C35ADC25090B890029A9D2 /* UIColor+Extensions.swift */; };
+		15C35ADF2509162D0029A9D2 /* FeedAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15C35ADE2509162D0029A9D2 /* FeedAdapter.swift */; };
+		15C35AE1250922FF0029A9D2 /* UserNameFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15C35AE0250922FF0029A9D2 /* UserNameFactory.swift */; };
 		15CF2599249A81A30077B9AC /* VKLoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15CF2598249A81A30077B9AC /* VKLoginController.swift */; };
 		15CF259B249A99AE0077B9AC /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15CF259A249A99AE0077B9AC /* WebKit.framework */; };
 		2C54C1808E530554035DD285 /* Pods_dz_AlexeyMalkov.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E9A1F465291C7F1544FC14E6 /* Pods_dz_AlexeyMalkov.framework */; };
@@ -83,6 +86,9 @@
 		15B7382F245435600007C99C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		15B73831245435600007C99C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		15BBD4D224E00C780089AA58 /* PhotoService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoService.swift; sourceTree = "<group>"; };
+		15C35ADC25090B890029A9D2 /* UIColor+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extensions.swift"; sourceTree = "<group>"; };
+		15C35ADE2509162D0029A9D2 /* FeedAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedAdapter.swift; sourceTree = "<group>"; };
+		15C35AE0250922FF0029A9D2 /* UserNameFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserNameFactory.swift; sourceTree = "<group>"; };
 		15CF2598249A81A30077B9AC /* VKLoginController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VKLoginController.swift; sourceTree = "<group>"; };
 		15CF259A249A99AE0077B9AC /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		634126412D1F5DC73D19268B /* Pods-dz_AlexeyMalkov.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-dz_AlexeyMalkov.debug.xcconfig"; path = "Target Support Files/Pods-dz_AlexeyMalkov/Pods-dz_AlexeyMalkov.debug.xcconfig"; sourceTree = "<group>"; };
@@ -116,6 +122,7 @@
 			children = (
 				152ABB10247BC67C0035B9EB /* ThirdTabTableViewController.swift */,
 				152ABB12247BD5230035B9EB /* FeedTableViewCell.swift */,
+				15C35ADE2509162D0029A9D2 /* FeedAdapter.swift */,
 			);
 			path = UsersFeed;
 			sourceTree = "<group>";
@@ -131,6 +138,7 @@
 				1533CCFE2487B363006325DF /* InteractiveManager.swift */,
 				1533CCFA2487B2E5006325DF /* PopAnimator.swift */,
 				1533CCFC2487B304006325DF /* PushAnimator.swift */,
+				15C35ADC25090B890029A9D2 /* UIColor+Extensions.swift */,
 			);
 			path = Animations;
 			sourceTree = "<group>";
@@ -148,6 +156,7 @@
 			children = (
 				15208519245DF3D800C8EC4E /* FirstTabTableViewController.swift */,
 				1564AD41246D5FFD00262B5B /* friendsTableViewCell.swift */,
+				15C35AE0250922FF0029A9D2 /* UserNameFactory.swift */,
 			);
 			path = UsersFriends;
 			sourceTree = "<group>";
@@ -385,10 +394,12 @@
 				15B73824245435590007C99C /* AppDelegate.swift in Sources */,
 				152ABB14247BD5230035B9EB /* FeedTableViewCell.swift in Sources */,
 				1564AD4A246D72B500262B5B /* UsersGroupsTableViewCell.swift in Sources */,
+				15C35ADF2509162D0029A9D2 /* FeedAdapter.swift in Sources */,
 				1563F5842496382900DA3DE4 /* UserSession.swift in Sources */,
 				1564AD57246D89D400262B5B /* GroupList.swift in Sources */,
 				15CF2599249A81A30077B9AC /* VKLoginController.swift in Sources */,
 				1533CCFB2487B2E5006325DF /* PopAnimator.swift in Sources */,
+				15C35ADD25090B8A0029A9D2 /* UIColor+Extensions.swift in Sources */,
 				1564AD55246D88AF00262B5B /* UserList.swift in Sources */,
 				1533CCFF2487B363006325DF /* InteractiveManager.swift in Sources */,
 				1520851A245DF3D800C8EC4E /* FirstTabTableViewController.swift in Sources */,
@@ -396,6 +407,7 @@
 				15060BAC24C5FBA5004067AA /* GroupProfile.swift in Sources */,
 				1533E23024A9DA6D00606C44 /* UsersProfile.swift in Sources */,
 				1564AD48246D71A100262B5B /* SecondTabTableViewController.swift in Sources */,
+				15C35AE1250922FF0029A9D2 /* UserNameFactory.swift in Sources */,
 				1533CD012487B39E006325DF /* CustomNavigationController.swift in Sources */,
 				15B73826245435590007C99C /* SceneDelegate.swift in Sources */,
 				1533CCFD2487B304006325DF /* PushAnimator.swift in Sources */,

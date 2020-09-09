@@ -20,6 +20,7 @@ class FirstTabTableViewController: UITableViewController, UISearchBarDelegate {
     var searchUser: [Friend] = []
     var searching = false
     var photoService: PhotoService?
+    var userName = UserNameFactory()
         
     @IBOutlet weak var searchBar: UISearchBar!
 
@@ -101,9 +102,9 @@ class FirstTabTableViewController: UITableViewController, UISearchBarDelegate {
                 let destinationVC = segue.destination as? UsersProfile,
                 let indexPath = tableView.indexPathForSelectedRow{
                 let user = searchUser[indexPath.row]
-                let usersNameTitle = user.lastName + " " + user.firstName
+                let usersNameTitle = userName.userName(object: user)
                 let url = URL(string: user.avatar)
-                let usersName = user.lastName + " " + user.firstName
+                let usersName = userName.userName(object: user)
                 let usersBirthDate = user.bdate
                 let secondURL = URL(string: user.usersPhoto)
                 destinationVC.title = usersNameTitle
@@ -117,9 +118,9 @@ class FirstTabTableViewController: UITableViewController, UISearchBarDelegate {
                 let destinationVC = segue.destination as? UsersProfile,
                 let indexPath = tableView.indexPathForSelectedRow{
                 let user = fbUser[indexPath.row]
-                let usersNameTitle = user.lastName + " " + user.firstName
+                let usersNameTitle = userName.userName(object: user)
                 let url = URL(string: user.avatar)
-                let usersName = user.lastName + " " + user.firstName
+                let usersName = userName.userName(object: user)
                 let usersBirthDate = user.bdate
                 let secondURL = URL(string: user.usersPhoto)
                 destinationVC.title = usersNameTitle

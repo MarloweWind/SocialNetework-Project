@@ -62,8 +62,8 @@ class ScaleImage: UIImageView {
         label.font = UIFont(name: "HelveticaNeue", size: 12.0)
         label.sizeToFit()
         label.textAlignment = NSTextAlignment.center
-        label.textColor = UIColor(white: 0.85, alpha: 1)
-        label.backgroundColor = UIColor.black.withAlphaComponent(0.8)
+        label.textColor = UIColor.textColor
+        label.backgroundColor = UIColor.backgroundColor
         label.alpha = 0.0
         
         return label
