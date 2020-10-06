@@ -23,7 +23,6 @@ class GlobalGroupsTebleViewController: UITableViewController, UISearchBarDelegat
     var searchGroup: [Group] = []
     var searching = false
     let myQueue = OperationQueue()
-    var sortedGroup = [GroupList]()
     
     override func viewDidLoad() {
         super.viewDidLoad()

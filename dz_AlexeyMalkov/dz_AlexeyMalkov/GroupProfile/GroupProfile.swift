@@ -26,6 +26,4 @@ class GroupProfile: UIViewController{
         groupBanner.kf.setImage(with: groupBan)
     }
     
-    //showGroupProfile
-    
 }

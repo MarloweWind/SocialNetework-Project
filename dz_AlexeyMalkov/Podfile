@@ -5,13 +5,10 @@ target 'dz_AlexeyMalkov' do
   # Comment the next line if you don't want to use dynamic frameworks
   use_frameworks!
 
-  pod 'Alamofire'
   pod 'Kingfisher'
-  pod 'RealmSwift'
-  pod 'SwiftyJSON'
   pod 'Firebase/Auth'
   pod 'Firebase/Firestore'
-  pod "PromiseKit"
+  pod 'Alamofire'
   # Pods for dz_AlexeyMalkov
 
 end
