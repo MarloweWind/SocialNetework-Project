@@ -19,7 +19,6 @@ class LoadinAnimation: UIView {
         let circlesCount = 3
         let side: CGFloat = 10
         let offset: CGFloat = 5
-        print(bounds.width)
         let x: CGFloat = 0
         let circleColor = UIColor.gray
         

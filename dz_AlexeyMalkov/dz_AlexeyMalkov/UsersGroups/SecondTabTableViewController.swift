@@ -142,13 +142,11 @@ class SecondTabTableViewController: UITableViewController, UISearchBarDelegate {
         if searching{
             let object = searchGroup[indexPath.row]
             cell.setGroup(object: object)
-            let fbImage = searchGroup[indexPath.row]
-            cell.groupAvatar.image = photoService?.photo(atIndexpath: indexPath, byUrl: fbImage.groupAvatar)
+            cell.groupAvatar.image = photoService?.photo(atIndexpath: indexPath, byUrl: object.groupAvatar)
         } else {
             let object = fbGroup[indexPath.row]
             cell.setGroup(object: object)
-            let fbImage = fbGroup[indexPath.row]
-            cell.groupAvatar.image = photoService?.photo(atIndexpath: indexPath, byUrl: fbImage.groupAvatar)
+            cell.groupAvatar.image = photoService?.photo(atIndexpath: indexPath, byUrl: object.groupAvatar)
         }
         
         return cell
