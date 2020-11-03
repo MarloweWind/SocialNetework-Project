@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import Kingfisher
 import RealmSwift
 
 class ThirdTabTableViewController: UITableViewController {
@@ -15,6 +14,7 @@ class ThirdTabTableViewController: UITableViewController {
     private let queue: DispatchQueue = DispatchQueue(label: "feedQueue", qos: .userInteractive, attributes: [.concurrent])
     var feed: [FeedList] = []
     var isLoading: Bool = false
+    var photoService: PhotoService?
     
     func setupRefreshControl(){
         refreshControl = UIRefreshControl()
@@ -43,6 +43,7 @@ class ThirdTabTableViewController: UITableViewController {
             }
         }
         setupRefreshControl()
+        photoService = PhotoService(container: tableView)
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -59,10 +60,8 @@ class ThirdTabTableViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "feedCell", for: indexPath) as! FeedTableViewCell
         let object = feed[indexPath.row]
         cell.setFeed(object: object)
-        let url = URL(string: feed[indexPath.row].feedPhoto.photo)
-        cell.feedImage.kf.setImage(with: url)
-        
-        
+        cell.feedImage.image = photoService?.photo(atIndexpath: indexPath, byUrl: object.feedPhoto.photo)
+                
         return cell
     }
 

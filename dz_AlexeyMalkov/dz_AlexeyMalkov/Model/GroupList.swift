@@ -39,9 +39,3 @@ struct GroupList: Equatable {
     }
 }
 
-struct Group {
-    var groupId: Int = 0
-    var groupName: String = ""
-    var groupAvatar: String = ""
-    var groupBanner: String = ""
-}

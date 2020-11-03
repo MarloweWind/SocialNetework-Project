@@ -11,32 +11,6 @@ import Foundation
 import RealmSwift
 import SwiftyJSON
 
-struct FeedListFireBase{
-    var headLine: String
-    var imageFeed: String
-    var feed: String
-    var usersAvatar: String
-    var usersName: String
-    var commentsCount: String
-    var repostCount: String
-    var viewsCount: String
-}
-
-class FeedListVK: Object {
-    @objc dynamic var postId: Int = 0
-    @objc dynamic var sourceId: Int = 0
-    @objc dynamic var text: String = ""
-    @objc dynamic var imageURL: String = ""
-    @objc dynamic var views: Int = 0
-    @objc dynamic var likes: Int = 0
-    @objc dynamic var comments: Int = 0
-    @objc dynamic var reposts: Int = 0
-    
-    override class func primaryKey() -> String? {
-        return "postId"
-    }
-}
-
 class FeedSource: Object {
     
     @objc dynamic var id: Int = 0

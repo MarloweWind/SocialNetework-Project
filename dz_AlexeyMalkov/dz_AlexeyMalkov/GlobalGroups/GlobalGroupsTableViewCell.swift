@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import Kingfisher
 
 class GlobalGroupsTableViewCell: UITableViewCell {
 
@@ -16,18 +15,13 @@ class GlobalGroupsTableViewCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
     }
 
-    func setGroup (object: Group){
-        let url = URL(string: object.groupAvatar)
+    func setGroup (object: GroupList){
         self.globalGroupName.text = object.groupName
-        self.globalGroupAvatar.kf.setImage(with: url)
     }
 }
