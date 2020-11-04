@@ -7,8 +7,6 @@
 //
 
 import UIKit
-import Kingfisher
-import RealmSwift
 import FirebaseFirestore
 
 class SecondTabTableViewController: UITableViewController, UISearchBarDelegate {
@@ -23,17 +21,11 @@ class SecondTabTableViewController: UITableViewController, UISearchBarDelegate {
 
     @IBOutlet weak var searchBar: UISearchBar!
     
-    var token: NotificationToken?
-    
-    let group = realm.objects(GroupListRealm.self)
-    var sortedGroup = realm.objects(GroupListRealm.self)
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         searchBar.delegate = self
-        //loadUserGroups()
-        //notification()
         fbGroupData()
+        photoService = PhotoService(container: tableView)
     }
     
     func fbGroupData(){
@@ -56,22 +48,8 @@ class SecondTabTableViewController: UITableViewController, UISearchBarDelegate {
                 }
             }
         }
-        photoService = PhotoService(container: tableView)
     }
 
-    func notification(){
-        token = sortedGroup.observe({ (changes: RealmCollectionChange) in
-            switch changes{
-            case .initial(let result):
-                print(result)
-            case.update(_, deletions: _, insertions: _, modifications: _):
-                self.tableView.reloadData()
-            case.error(let error):
-                print(error.localizedDescription)
-                       }
-        })
-    }
-    
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         searchGroup = fbGroup.filter({$0.groupName.lowercased().prefix(searchText.count) == searchText.lowercased()})
         searching = true
@@ -140,18 +118,35 @@ class SecondTabTableViewController: UITableViewController, UISearchBarDelegate {
         }
     }
     
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let cell = tableView.cellForRow(at: indexPath) as! UsersGroupsTableViewCell
+        
+        let scale = CGAffineTransform(scaleX: 0.8, y: 0.8)
+        cell.groupAvatar.transform = scale
+        cell.groupAvatar.alpha = 0.5
+
+        UIView.animate(withDuration: 0.5,
+                       delay: 0,
+                       usingSpringWithDamping: 0.5,
+                       initialSpringVelocity: 0,
+                       options: [.curveEaseInOut],
+                       animations: {
+                        cell.groupAvatar.transform = .identity
+                        cell.groupAvatar.alpha = 1
+                        
+        })
+    }
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "usersGropus", for: indexPath) as! UsersGroupsTableViewCell
         if searching{
             let object = searchGroup[indexPath.row]
             cell.setGroup(object: object)
-            let fbImage = searchGroup[indexPath.row]
-            cell.groupAvatar.image = photoService?.photo(atIndexpath: indexPath, byUrl: fbImage.groupAvatar)
+            cell.groupAvatar.image = photoService?.photo(atIndexpath: indexPath, byUrl: object.groupAvatar)
         } else {
             let object = fbGroup[indexPath.row]
             cell.setGroup(object: object)
-            let fbImage = fbGroup[indexPath.row]
-            cell.groupAvatar.image = photoService?.photo(atIndexpath: indexPath, byUrl: fbImage.groupAvatar)
+            cell.groupAvatar.image = photoService?.photo(atIndexpath: indexPath, byUrl: object.groupAvatar)
         }
         
         return cell

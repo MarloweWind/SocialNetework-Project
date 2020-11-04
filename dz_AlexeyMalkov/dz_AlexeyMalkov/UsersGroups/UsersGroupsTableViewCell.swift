@@ -15,17 +15,13 @@ class UsersGroupsTableViewCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
     }
+    
     func setGroup (object: Group){
-//        let url = URL(string: object.groupAvatar)
         self.groupName.text = object.groupName
-//        self.groupAvatar.kf.setImage(with: url)
     }
 }
